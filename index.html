@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>Autodiagnóstico de convivencia · Eventuras</title>
 <meta name="description" content="Dieciséis preguntas sobre las prácticas instaladas en tu colegio. Recibes un informe con tres movimientos concretos para 2027.">
 <meta name="robots" content="index, follow">
@@ -24,24 +25,7 @@
   --radio:14px;
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --verde:#A7D634; --verde-hondo:#C2E55F; --verde-tenue:#22301A;
-    --coral:#F08A8A; --coral-tenue:#36201F;
-    --tinta:#ECECE7; --tinta-media:#B0B0A8; --tinta-tenue:#85857D;
-    --papel:#23241F; --fondo:#1A1B17; --linea:#36372F;
-    --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --verde:#A7D634; --verde-hondo:#C2E55F; --verde-tenue:#22301A;
-  --coral:#F08A8A; --coral-tenue:#36201F;
-  --tinta:#ECECE7; --tinta-media:#B0B0A8; --tinta-tenue:#85857D;
-  --papel:#23241F; --fondo:#1A1B17; --linea:#36372F;
-  --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
-  color-scheme:dark;
-}
+/* Siempre en modo claro, aunque el computador o celular esté en modo oscuro. */
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--fondo);color:var(--tinta);font-family:var(--display);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
@@ -57,7 +41,7 @@ a{color:var(--verde-hondo)}
 :focus-visible{outline:3px solid var(--verde);outline-offset:2px}
 
 header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px 8px}
-header.top img{height:40px;width:auto}
+header.top img{height:60px;width:auto;display:block}
 header.top .cuenta{font-size:.78rem;color:var(--tinta-tenue);font-variant-numeric:tabular-nums}
 .pasos{display:flex;gap:3px;padding-block:6px 20px}
 .paso{flex:1;height:4px;border-radius:99px;background:var(--linea);transition:background .25s}
