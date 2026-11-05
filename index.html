@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autodiagnóstico de convivencia · Eventuras</title>
+<meta name="description" content="Dieciséis preguntas sobre las prácticas instaladas en tu colegio. Recibes un informe con tres movimientos concretos para 2027.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Autodiagnóstico de convivencia · Eventuras">
+<meta property="og:description" content="Dieciséis preguntas, seis minutos, y un informe con tres movimientos concretos para 2027.">
+<meta property="og:type" content="website">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --verde:#93C11F; --verde-hondo:#6E9112; --verde-tenue:#F3F9E4;
+  --coral:#E25D5D; --coral-tenue:#FDEEEE;
+  --tinta:#383838; --tinta-media:#6E6E6E; --tinta-tenue:#9B9B9B;
+  --papel:#FFFFFF; --fondo:#F7F7F4; --linea:#E4E4DE;
+  --sombra:0 1px 2px rgba(56,56,56,.06), 0 8px 24px rgba(56,56,56,.07);
+  --display:'Nunito', ui-rounded, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --radio:14px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --verde:#A7D634; --verde-hondo:#C2E55F; --verde-tenue:#22301A;
+    --coral:#F08A8A; --coral-tenue:#36201F;
+    --tinta:#ECECE7; --tinta-media:#B0B0A8; --tinta-tenue:#85857D;
+    --papel:#23241F; --fondo:#1A1B17; --linea:#36372F;
+    --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --verde:#A7D634; --verde-hondo:#C2E55F; --verde-tenue:#22301A;
+  --coral:#F08A8A; --coral-tenue:#36201F;
+  --tinta:#ECECE7; --tinta-media:#B0B0A8; --tinta-tenue:#85857D;
+  --papel:#23241F; --fondo:#1A1B17; --linea:#36372F;
+  --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--fondo);color:var(--tinta);font-family:var(--display);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
+[hidden]{display:none!important}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:800;letter-spacing:-.015em}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input,select,textarea{font:inherit;color:inherit}
+a{color:var(--verde-hondo)}
+:focus-visible{outline:3px solid var(--verde);outline-offset:2px}
+
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px 8px}
+header.top img{height:40px;width:auto}
+header.top .cuenta{font-size:.78rem;color:var(--tinta-tenue);font-variant-numeric:tabular-nums}
+.pasos{display:flex;gap:3px;padding-block:6px 20px}
+.paso{flex:1;height:4px;border-radius:99px;background:var(--linea);transition:background .25s}
+.paso.on{background:var(--verde)}
+
+.intro .ojo{font-size:.76rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--verde-hondo);margin-bottom:8px}
+.intro h1{font-size:clamp(1.5rem,5.2vw,2.05rem);line-height:1.15}
+.intro p.sub{color:var(--tinta-media);margin-top:10px;max-width:54ch}
+
+.card{background:var(--papel);border:1px solid var(--linea);border-radius:var(--radio);box-shadow:var(--sombra)}
+section.step{margin-top:22px}
+.q{font-size:1.14rem;font-weight:800;margin-bottom:4px;line-height:1.3}
+.hint{font-size:.87rem;color:var(--tinta-media);margin-bottom:14px}
+.dimtag{font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--verde-hondo);margin-bottom:6px}
+.alcance{font-size:.84rem;color:var(--tinta-media);font-style:italic;margin-bottom:12px}
+
+.search{position:relative}
+.search input{width:100%;padding:15px 16px;border:1.5px solid var(--linea);border-radius:var(--radio);background:var(--papel);outline:none}
+.search input:focus{border-color:var(--verde);box-shadow:0 0 0 3px var(--verde-tenue)}
+.res{margin-top:8px;max-height:310px;overflow-y:auto;border-radius:var(--radio);border:1px solid var(--linea);background:var(--papel);box-shadow:var(--sombra)}
+.res button{display:block;width:100%;text-align:left;padding:11px 14px;border-bottom:1px solid var(--linea)}
+.res button:last-child{border-bottom:0}
+.res button:hover,.res button:focus-visible{background:var(--verde-tenue)}
+.res .nm{font-weight:700;font-size:.93rem;line-height:1.3;display:block}
+.res .mt{font-size:.78rem;color:var(--tinta-media);margin-top:1px;display:block}
+.vacio{padding:14px;font-size:.86rem;color:var(--tinta-media)}
+.elegido{display:flex;gap:12px;align-items:flex-start;padding:14px 15px;border-radius:var(--radio);background:var(--verde-tenue);border:1px solid var(--verde)}
+.elegido .nm{font-weight:800;line-height:1.25}
+.elegido .mt{font-size:.82rem;color:var(--tinta-media);margin-top:2px}
+
+.opts{display:grid;gap:10px}
+.opt{display:block;width:100%;text-align:left;padding:14px 15px;border:1.5px solid var(--linea);border-radius:var(--radio);background:var(--papel);transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--verde)}
+.opt.sel{border-color:var(--verde);background:var(--verde-tenue);border-width:2px}
+.opt .t{font-weight:800;font-size:.95rem}
+.opt.plano{padding:15px 16px}
+.opt.plano .d{font-size:.93rem;color:var(--tinta);margin-top:0;line-height:1.5}
+.opt.plano.sel .d{font-weight:700}
+.marcaciclo{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;padding:11px 13px;margin-bottom:14px;
+  border:1.5px dashed var(--linea);border-radius:12px;font-size:.84rem;color:var(--tinta-media);line-height:1.45}
+.marcaciclo:hover{border-color:var(--verde)}
+.marcaciclo.sel{border-style:solid;border-color:var(--verde);background:var(--verde-tenue);color:var(--tinta)}
+.marcaciclo .bx{flex:none;width:19px;height:19px;border-radius:5px;border:1.5px solid var(--linea);background:var(--papel);
+  display:grid;place-items:center;font-size:.72rem;font-weight:800;color:var(--verde-hondo);margin-top:1px}
+.marcaciclo.sel .bx{border-color:var(--verde)}
+.opt .d{font-size:.87rem;color:var(--tinta-media);margin-top:3px;line-height:1.45;display:block}
+.salidas{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.salida{font-size:.8rem;padding:8px 14px;border-radius:99px;border:1.5px solid var(--linea);color:var(--tinta-media);background:var(--papel)}
+.salida:hover{border-color:var(--tinta-tenue);color:var(--tinta)}
+.salida.sel{border-color:var(--verde);background:var(--verde-tenue);color:var(--verde-hondo);font-weight:800}
+
+.acc{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;align-items:center}
+.btn{padding:13px 22px;border-radius:99px;font-weight:800;font-size:.95rem;text-decoration:none;display:inline-block}
+.btn.p{background:var(--verde);color:#1F2A08}
+.btn.p:hover{background:var(--verde-hondo);color:#fff}
+.btn.s{border:1.5px solid var(--linea);color:var(--tinta-media)}
+.btn.s:hover{border-color:var(--tinta-tenue);color:var(--tinta)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.conf{display:flex;gap:11px;align-items:flex-start;padding:14px 15px;border-radius:var(--radio);background:var(--papel);border:1px solid var(--linea);font-size:.86rem;line-height:1.5;color:var(--tinta-media)}
+.conf .ic{flex:none;width:26px;height:26px;border-radius:99px;background:var(--verde-tenue);border:1px solid var(--verde);display:grid;place-items:center;color:var(--verde-hondo);font-weight:800;font-size:.8rem}
+.conf b{color:var(--tinta)}
+
+.espejo{display:grid;gap:0}
+.espejo .ln{display:grid;grid-template-columns:118px 1fr;gap:12px;padding-block:12px;border-top:1px solid var(--linea);align-items:start}
+.espejo .ln:first-child{border-top:0}
+.espejo .dd{font-size:.72rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--verde-hondo);line-height:1.35}
+.espejo .tx{font-size:.9rem;line-height:1.45}
+
+/* ====== informe ====== */
+.prop{overflow:hidden;margin-top:18px}
+.prop .cab{background:var(--verde);color:#1F2A08;padding:20px 22px}
+.prop .cab .k{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.prop .cab h2{font-size:1.4rem;margin-top:3px;line-height:1.2}
+.prop .cab .para{font-size:.86rem;margin-top:6px;font-weight:700;opacity:.9}
+.prop .cuerpo{padding:20px 22px}
+.bloq{padding-block:18px;border-top:1px solid var(--linea)}
+.bloq:first-child{border-top:0;padding-top:0}
+.bloq h3{font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--verde-hondo);margin-bottom:12px}
+.lista{display:grid;gap:9px}
+.li{display:flex;gap:9px;font-size:.92rem;line-height:1.45}
+.li .pt{flex:none;width:7px;height:7px;border-radius:99px;background:var(--verde);margin-top:8px}
+.sp5{display:grid;gap:13px}
+.sp5 .it{display:flex;gap:11px}
+.sp5 .n{flex:none;width:25px;height:25px;border-radius:99px;background:var(--coral);color:#fff;font-size:.76rem;font-weight:800;display:grid;place-items:center;margin-top:1px}
+.sp5 .tt{font-weight:800;font-size:.93rem;line-height:1.3}
+.sp5 .dd{font-size:.86rem;color:var(--tinta-media);line-height:1.45;margin-top:2px}
+.sp5 .mes{display:inline-block;margin-top:5px;font-size:.72rem;font-weight:800;color:var(--verde-hondo);background:var(--verde-tenue);border:1px solid var(--verde);padding:2px 9px;border-radius:99px}
+
+.radarbox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,236px);gap:20px;align-items:center}
+@media (max-width:620px){.radarbox{grid-template-columns:1fr}}
+.leyenda{display:grid;gap:8px;min-width:0}
+.leyenda .f{display:grid;gap:4px;font-size:.84rem;padding-bottom:8px;border-bottom:1px solid var(--linea);min-width:0}
+.leyenda .f:last-child{border-bottom:0}
+.leyenda .nm{font-weight:700;line-height:1.3;min-width:0;overflow-wrap:break-word}
+.leyenda .bn{font-size:.7rem;font-weight:800;letter-spacing:.02em;padding:2px 9px;border-radius:99px;white-space:nowrap;border:1px solid;justify-self:start}
+.b3{background:var(--verde-tenue);color:var(--verde-hondo);border-color:var(--verde)}
+.b2{background:#FFF7E3;color:#8A6A12;border-color:#E8C76A}
+.b1{background:var(--coral-tenue);color:var(--coral);border-color:var(--coral)}
+.b0{background:var(--fondo);color:var(--tinta-tenue);border-color:var(--linea)}
+
+.lead{font-size:.88rem;color:var(--tinta-media);line-height:1.5;margin-bottom:14px;max-width:62ch}
+.glosa{display:grid;gap:5px;margin-top:16px;padding-top:13px;border-top:1px solid var(--linea);font-size:.8rem;color:var(--tinta-media);line-height:1.45}
+.glosa b{color:var(--tinta)}
+.lecturas{display:grid;gap:14px}
+.lec{padding:15px 16px;border-radius:var(--radio);border:1px solid var(--linea);background:var(--fondo)}
+.lec .lt{font-weight:800;font-size:.98rem;line-height:1.3}
+.lec .lr{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.lec .lr span{font-size:.72rem;font-weight:700;color:var(--tinta-media);background:var(--papel);
+  border:1px solid var(--linea);border-radius:99px;padding:3px 10px;line-height:1.35}
+.lec .ll{font-size:.9rem;line-height:1.5;margin-top:10px}
+.lec .li2{font-size:.9rem;line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid var(--linea);color:var(--tinta-media)}
+.sp5 .orig{font-size:.76rem;color:var(--tinta-tenue);margin-top:5px;line-height:1.4}
+.nota-pie{font-size:.8rem;color:var(--tinta-tenue);margin-top:14px;line-height:1.5}
+.alcbox{display:grid;gap:9px;font-size:.86rem;color:var(--tinta-media);line-height:1.5}
+.alcbox>div{padding-left:13px;border-left:2px solid var(--linea)}
+.refs{font-size:.72rem;color:var(--tinta-tenue);line-height:1.5;margin-top:14px;padding-top:11px;border-top:1px solid var(--linea)}
+.foco{padding:16px 17px;border-radius:var(--radio);background:var(--verde-tenue);border:1px solid var(--verde)}
+.foco .porq{font-size:.85rem;margin-top:10px;padding-top:9px;border-top:1px solid var(--verde);color:var(--tinta-media);line-height:1.5}
+.foco .porq b{color:var(--tinta)}
+.foco .k{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--verde-hondo)}
+.foco .t{font-weight:800;font-size:1.02rem;margin-top:4px;line-height:1.3}
+.foco .hoy{font-size:.88rem;color:var(--tinta-media);margin-top:8px;line-height:1.45}
+.foco .meta{font-size:.88rem;margin-top:9px;line-height:1.45;padding-top:9px;border-top:1px solid var(--verde)}
+
+table.anx{width:100%;border-collapse:collapse;font-size:.82rem}
+table.anx td{padding:7px 0;border-bottom:1px solid var(--linea);vertical-align:top}
+table.anx td.n{text-align:right;font-weight:800;white-space:nowrap;padding-left:12px}
+table.anx tr:last-child td{border-bottom:0}
+details.anexo{margin-top:6px}
+details.anexo summary{cursor:pointer;font-size:.86rem;font-weight:700;color:var(--verde-hondo);padding-block:6px}
+.plan{font-size:.85rem}
+.plan .r{display:grid;grid-template-columns:1fr auto;gap:10px;padding-block:7px;border-bottom:1px dotted var(--linea)}
+.plan .r:last-child{border-bottom:0}
+.plan .r b{color:var(--verde-hondo);white-space:nowrap;font-variant-numeric:tabular-nums}
+.plan .r.enc{font-size:.74rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--tinta-tenue);border-bottom:1px solid var(--linea);padding-bottom:8px}
+.plan .r.enc b{color:var(--tinta-tenue)}
+.plan .r i{font-style:normal;color:var(--tinta-tenue);font-weight:700}
+.plan .r b.falta{color:var(--coral)}
+.falta-box{margin-top:16px;padding:15px 16px;border-radius:var(--radio);background:var(--coral-tenue);border:1px solid var(--coral)}
+.falta-box .ft{font-weight:800;font-size:.95rem;line-height:1.3}
+.falta-box p{font-size:.88rem;line-height:1.5;margin-top:8px}
+.copiabox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.copiaok{font-size:.8rem;font-weight:800;color:var(--verde-hondo)}
+.dd.ligada{word-break:break-all;margin-top:8px;font-weight:700;color:var(--tinta)}
+
+form.env{display:grid;gap:12px;margin-top:6px}
+form.env .par{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media (max-width:540px){form.env .par{grid-template-columns:1fr}}
+form.env label{font-size:.82rem;font-weight:700;display:block;margin-bottom:4px}
+form.env input[type=text],form.env input[type=email],form.env input[type=tel]{width:100%;padding:12px 14px;border:1.5px solid var(--linea);border-radius:12px;background:var(--papel)}
+form.env input:focus{border-color:var(--verde);outline:none}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--tinta-media);line-height:1.45}
+.consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--verde);flex:none}
+.estado{font-size:.88rem;padding:12px 14px;border-radius:12px;margin-top:12px}
+.estado.ok{background:var(--verde-tenue);border:1px solid var(--verde)}
+.estado.err{background:var(--coral-tenue);border:1px solid var(--coral)}
+
+footer.pie{margin-top:40px;padding-top:18px;border-top:1px solid var(--linea);font-size:.8rem;color:var(--tinta-tenue);display:flex;gap:14px;flex-wrap:wrap}
+.folio{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.78rem;color:var(--tinta-tenue);padding-block:14px 0;border-top:1px solid var(--linea);margin-top:4px}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff}
+  .pasos,.acc,header.top .cuenta,footer.pie,.noimp,form.env{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .prop{box-shadow:none;border:0;margin:0}
+  .bloq{break-inside:avoid}
+  details.anexo{break-before:page}
+  details.anexo[open] summary{list-style:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="logo.png" alt="Eventuras">
+    <span class="cuenta" id="cuenta" hidden></span>
+  </header>
+
+  <div class="pasos" id="pasos" hidden></div>
+  <main id="app"></main>
+
+  <footer class="pie noimp">
+    <span>Fundación Eventuras</span>
+    <a href="https://www.eventuras.org">eventuras.org</a>
+    <a href="https://www.eventuras.org/politica-de-privacidad">Política de privacidad</a>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Autodiagnóstico de convivencia · Fundación Eventuras
+   Mide prácticas instaladas, nunca percepción de clima.
+   Escala de cuatro niveles: Débil, Incipiente, Satisfactorio, Avanzado.
+   ============================================================ */
+
+/* Backend: misma mecánica que el cotizador (Apps Script).
+   Mientras esté vacío, el informe se muestra igual y no se envía nada. */
+const ENDPOINT = '';
+const CONTACTO = { correo:'contacto@eventuras.org', sitio:'https://www.eventuras.org',
+                   privacidad:'https://www.eventuras.org/politica-de-privacidad' };
+
+/* Los patrones se activan cuando haya respuestas suficientes para definir
+   qué es alto y qué es bajo contra la distribución observada. Antes de eso,
+   nombrar un patrón sería afirmar algo que el dato no sostiene. */
+const PATRONES_ACTIVOS = false;
+
+/* En la interfaz los niveles no se nombran: la persona elige entre cuatro descripciones.
+   Los nombres de estado solo aparecen en el informe y en el anexo. */
+const NIV = ['Sin instalar','Inicial','En práctica','Consolidado'];
+
+const DIMS = [
+ { id:'sala', nombre:'Lo que pasa en la sala', corto:'La sala', items:[
+   { id:'1.1', c1:true, t:'Regularidad y secuencia del trabajo socioemocional', n:[
+     'Ocurre en actividades aisladas, como talleres puntuales, jornadas de convivencia o actividades de efemérides. No hay un espacio regular en el horario.',
+     'Hay un espacio asignado, de frecuencia mensual o menor, o bien semanal pero suspendido seguido por actos, ensayos, evaluaciones o reuniones.',
+     'Hay un espacio semanal en el horario de los cursos, con contenidos definidos y ordenados para el año, que se realiza la mayoría de las semanas.',
+     'Las sesiones están calendarizadas y hay progresión escrita entre niveles, de modo que cada curso supone las habilidades del anterior.'],
+     mov:['Fijar el bloque semanal y protegerlo','Dejar el bloque en el horario de todos los cursos antes de que parta el año, con las sesiones del primer semestre ya calendarizadas, y nombrar quién revisa que se haya hecho.','Antes de que parta el año'] },
+   { id:'1.2', t:'Rutinas comunes de manejo de aula', n:[
+     'Cada profesor aplica lo que ha aprendido por su cuenta. Un estudiante que cambia de sala encuentra reglas distintas en cada una.',
+     'Hay acuerdos escritos sobre el manejo de la sala, y su aplicación queda a criterio de cada profesor sin que nadie revise la diferencia.',
+     'Hay rutinas comunes para el inicio de la clase, las transiciones, pedir la palabra y responder a una interrupción, y la mayoría las aplica igual.',
+     'Las rutinas están escritas, se aplican en todas las salas y un profesor que llega a mitad de año las adquiere en sus primeras semanas.'],
+     mov:['Acordar tres rutinas y escribirlas','Elegir tres momentos de la clase, acordar una sola forma de resolverlos y dejarla por escrito en una plana que se entrega a todo el que llega.','Antes de que parta el año'] },
+   { id:'1.3', t:'Respuesta ante la desregulación conductual en la sala', alc:'Interrupción sostenida que impide la continuidad de la clase.', n:[
+     'El estudiante es retirado de la sala y el caso se deriva a convivencia o a inspectoría.',
+     'Hay un procedimiento de derivación y se activa cuando el profesor ya agotó sus recursos.',
+     'El profesor dispone de estrategias de primera respuesta dentro de la sala y la derivación opera como excepción.',
+     'Los estudiantes que requieren más apoyo tienen un plan definido antes del episodio, elaborado con el equipo de apoyo y con el profesor.'],
+     mov:['Definir la primera respuesta antes de derivar','Acordar qué hace el profesor dentro de la sala antes de derivar, y dejar la derivación como paso siguiente y no como primero.','Primer semestre'] }
+ ]},
+ { id:'adultos', nombre:'Capacidad de los adultos', corto:'Los adultos', items:[
+   { id:'2.1', c1:true, t:'Formación de quienes están en aula', n:[
+     'No ha habido formación específica en manejo de aula ni en habilidades socioemocionales, o la que hubo fue una charla única.',
+     'Hubo formación, sin seguimiento posterior en la práctica ni continuidad para quienes se incorporan después.',
+     'Hay formación con horas asignadas dentro de la jornada y cobertura definida del cuerpo docente.',
+     'La capacidad está instalada en el establecimiento. Se trabaja sobre casos propios, continúa de un año a otro y quienes tienen más dominio forman a los que llegan.'],
+     mov:['Poner la formación en el calendario con horas','Definir cuántas horas del año van a formación del cuerpo docente, en qué fechas y con qué cobertura, antes de que el calendario se llene.','Antes de que parta el año'] },
+   { id:'2.2', t:'Observación y retroalimentación en aula', n:[
+     'Nadie observa clases con foco en el manejo de la sala y la convivencia.',
+     'Se observa de vez en cuando, con pauta general y sin conversación posterior estructurada.',
+     'Se observa con pauta específica y hay una conversación de retroalimentación que termina en acuerdos registrados.',
+     'El ciclo se repite varias veces al año, el profesor define su propio foco y hay forma de verificar si los acuerdos cambiaron la práctica.'],
+     mov:['Instalar un ciclo corto de observación','Una pauta breve con foco en manejo de aula, una observación por semestre y una conversación de quince minutos que termine en un acuerdo escrito.','Primer semestre'] },
+   { id:'2.3', t:'Preparación de quien tiene la jefatura de curso', n:[
+     'La jefatura de curso es una asignación administrativa, sin preparación específica para el rol.',
+     'Hay orientaciones para el trabajo con el curso y el resto queda a criterio de cada profesor jefe.',
+     'Quienes tienen jefatura reciben formación específica para el rol y cuentan con horas asignadas a él.',
+     'Hay además una instancia periódica entre ellos para revisar casos y acordar respuestas comunes.'],
+     mov:['Dar horas y una instancia a los profesores jefe','Asignar horas a la jefatura y abrir una reunión mensual entre profesores jefe para revisar casos y acordar respuestas comunes.','Antes de que parta el año'] },
+   { id:'2.4', t:'Bienestar y carga del equipo adulto', n:[
+     'No hay acciones dirigidas al bienestar del equipo. El tema aparece cuando alguien se enferma o renuncia.',
+     'Hay acciones puntuales, como una actividad al año, sin continuidad.',
+     'Hay acciones planificadas de bienestar para el equipo, con responsable y fechas, dentro del plan anual.',
+     'Hay además una forma regular de conocer cómo está el equipo, y sus resultados ajustan decisiones de carga y de organización.'],
+     mov:['Preguntar cómo está el equipo, con un método','Una consulta breve al equipo dos veces al año, con resultados que se conversan y que ajustan decisiones de carga.','Una vez por semestre'] }
+ ]},
+ { id:'cultura', nombre:'Cultura y espacios compartidos', corto:'Cultura', items:[
+   { id:'3.1', c1:true, t:'Lenguaje común entre los adultos', n:[
+     'Frente a una misma situación, quienes están en inspectoría, en la sala y en el equipo de apoyo la describen y la resuelven de maneras distintas.',
+     'Hay un vocabulario compartido en una parte del equipo y no se ha extendido al resto.',
+     'Los adultos describen lo que ocurre y lo que corresponde hacer con los mismos términos, en la sala, en los espacios comunes y con las familias.',
+     'Ese lenguaje está escrito y se enseña a quienes se incorporan al establecimiento.'],
+     mov:['Acordar cómo se nombra lo que pasa','Definir el vocabulario con que el equipo describe una situación y lo que corresponde hacer, y usarlo también en la comunicación con las familias.','Antes de que parta el año'] },
+   { id:'3.2', t:'Procedimiento ante un trato inadecuado de un adulto hacia un estudiante', alc:'Situaciones cotidianas que no constituyen delito ni vulneración de derechos. Por ejemplo, descalificar a un estudiante frente al curso.', n:[
+     'La respuesta depende de quién tome conocimiento. No hay procedimiento definido más allá de lo que dice el reglamento interno.',
+     'El reglamento define el procedimiento y en la práctica se aborda con una conversación informal, sin registro ni acuerdos de seguimiento.',
+     'El procedimiento se aplicó en los últimos doce meses, con responsable designado y acuerdos registrados.',
+     'Se aplica de forma regular y está integrado al acompañamiento profesional del equipo, no a un proceso disciplinario.'],
+     mov:['Definir quién conduce la conversación y cómo queda registrada','Nombrar un responsable, acordar el paso a paso y dejar por escrito que esto forma parte del acompañamiento profesional.','Primer semestre'] },
+   { id:'3.3', t:'Los espacios fuera de la sala', alc:'Recreos, patios, traslados, entrada y salida.', n:[
+     'Lo que ocurre se resuelve según quién esté de turno. No hay criterios comunes ni preparación para quienes están a cargo.',
+     'Hay turnos asignados, sin criterios comunes de actuación ni instancia para revisar lo que ocurre.',
+     'Hay criterios comunes de actuación, y los asistentes de la educación e inspectores participan de la misma formación que los docentes.',
+     'Hay además una instancia regular de coordinación entre quienes sostienen esos espacios y el resto del equipo.'],
+     mov:['Incluir a quienes sostienen el patio','Sumar a asistentes de la educación e inspectores a la misma formación que los docentes y abrir una instancia de coordinación con ellos.','Antes de que parta el año'] }
+ ]},
+ { id:'liderazgo', nombre:'Liderazgo y gestión', corto:'Liderazgo', items:[
+   { id:'4.1', t:'Dónde se resuelven las decisiones de convivencia', alc:'Las que comprometen horas, horario, presupuesto, dotación o foco de la formación.', n:[
+     'No hay una instancia definida donde estas decisiones se resuelvan.',
+     'Se resuelven caso a caso, según quién las plantee y en qué momento del año.',
+     'Hay una instancia regular del equipo directivo donde se tratan, con quien coordina convivencia presente.',
+     'Se resuelven dentro del mismo proceso anual en que se definen el horario, la dotación y el presupuesto.'],
+     mov:['Darle a convivencia un punto fijo en la tabla','Incorporar convivencia como punto permanente de la reunión del equipo directivo, con quien coordina presente.','Antes de que parta el año'] },
+   { id:'4.2', c1:true, t:'Correspondencia entre prioridad declarada y recursos asignados', n:[
+     'La convivencia está declarada como prioridad en el PEI o en el PME y todavía no tiene horas ni presupuesto asociados.',
+     'Hay horas asignadas a una persona, y el resto del equipo no dispone de tiempo destinado a este trabajo.',
+     'Hay tiempo protegido para el equipo, en consejos o reuniones de nivel, destinado a este trabajo.',
+     'Ese tiempo se mantiene cuando el calendario se congestiona, en lugar de ser lo primero que se suspende.'],
+     mov:['Proteger el tiempo del equipo por escrito','Dejar definido qué parte del consejo o de la reunión de nivel se destina a este trabajo, y acordar que no se usa para otra cosa.','Antes de que parta el año'] },
+   { id:'4.3', t:'Articulación con el trabajo pedagógico', n:[
+     'El trabajo de convivencia corre por un carril separado del pedagógico. No hay instancias donde se crucen.',
+     'Hay coordinación cuando surge un caso, no de forma planificada.',
+     'Convivencia y el área técnico-pedagógica tienen instancias regulares de trabajo conjunto, con acuerdos registrados.',
+     'Las definiciones de convivencia y las pedagógicas se planifican juntas y quedan escritas en el mismo plan anual.'],
+     mov:['Cruzar convivencia con lo pedagógico una vez al mes','Una instancia mensual entre convivencia y UTP, con acuerdos registrados y escritos en el mismo plan anual.','Primer semestre'] }
+ ]},
+ { id:'comunidad', nombre:'Comunidad educativa', corto:'Comunidad', items:[
+   { id:'5.1', c1:true, t:'Vínculo formativo con las familias', n:[
+     'Las familias reciben comunicación cuando se produce un problema con su hijo o hija.',
+     'Reciben información sobre lo que realiza el establecimiento, sin instancias formativas.',
+     'Hay instancias de formación con apoderados, con fechas definidas en el año y convocatoria organizada.',
+     'Esas instancias son parte del plan anual, se registra su alcance y se ajustan según la participación observada.'],
+     mov:['Pasar de informar a formar','Definir dos instancias formativas con apoderados en el año, con fecha, responsable y convocatoria organizada.','Una vez por semestre'] },
+   { id:'5.2', t:'Participación de los estudiantes en la convivencia', n:[
+     'Los estudiantes son destinatarios de las normas y no participan en su elaboración ni revisión.',
+     'Participan en actividades puntuales, como una jornada o una campaña al año.',
+     'Hay instancias regulares donde los estudiantes revisan y proponen sobre la convivencia del establecimiento.',
+     'Sus propuestas modificaron contenidos concretos del plan o de las normas en el último ciclo.'],
+     mov:['Abrir una instancia donde los estudiantes propongan','Una revisión de las normas con participación de estudiantes, con sus propuestas registradas y respondidas por escrito.','Primer semestre'] },
+   { id:'5.3', t:'Gestión colaborativa de conflictos entre estudiantes', n:[
+     'Los conflictos entre estudiantes se resuelven por la vía disciplinaria, sin proceso de diálogo.',
+     'Hay mediación cuando alguien del equipo la propone, sin procedimiento definido.',
+     'Hay un procedimiento de gestión colaborativa de conflictos, con personas formadas para conducirlo.',
+     'Se aplica de forma regular, hay registro de los casos y el procedimiento es conocido por estudiantes y familias.'],
+     mov:['Formar a dos o tres personas para conducir conversaciones','Definir el procedimiento de gestión colaborativa de conflictos y formar a quienes lo van a conducir.','Primer semestre'] }
+ ]}
+];
+
+const OPC = [
+  { id:'O.1', t:'Registro de lo que ocurre', n:[
+    'El registro es irregular o se lleva en cuadernos personales de cada profesor.',
+    'Hay un registro centralizado que se completa cuando el caso reviste gravedad.',
+    'El registro es sistemático y hay una instancia periódica donde se revisa para ver patrones por curso, por momento de la jornada y por lugar.',
+    'Ese análisis queda vinculado a decisiones concretas del plan, y esas decisiones quedan escritas.'],
+    mov:['Centralizar el registro y mirarlo una vez al mes','Un solo lugar donde se registra, y una revisión mensual que busque patrones por curso, por hora y por lugar.','Antes de que parta el año'] },
+  { id:'O.2', t:'Evaluación de las acciones del plan', n:[
+    'Las acciones se ejecutan y no se evalúa su efecto.',
+    'Se evalúa la realización de la acción, no su resultado.',
+    'Cada acción relevante tiene al menos un indicador definido antes de iniciarla.',
+    'El resultado de esa evaluación determina qué se mantiene el año siguiente, y esa decisión queda registrada.'],
+    mov:['Definir un indicador por acción antes de partir','Para cada acción del plan, dejar escrito antes de empezar con qué dato se va a saber si sirvió.','Antes de que parta el año'] },
+  { id:'O.3', t:'Continuidad ante la rotación del equipo', alc:'Referido a quien conduce el trabajo de convivencia.', n:[
+    'El conocimiento, los contactos y el criterio están concentrados en una persona. Si deja el establecimiento, las acciones se interrumpen.',
+    'Hay materiales y registros archivados, y el criterio para aplicarlos no está documentado.',
+    'Los procedimientos están escritos con detalle suficiente para que otro profesional los retome, e identifican responsables alternativos.',
+    'La conducción está distribuida en varias personas y hay inducción definida para el rol.'],
+    mov:['Escribir los procedimientos para que otro los retome','Dejar por escrito el paso a paso de lo que hoy vive en la cabeza de una persona, con responsables alternativos nombrados.','Segundo semestre'] }
+];
+
+/* ===================== el criterio de la ruta =====================
+   El orden no sale del colegio, sale de un criterio declarado, y el informe
+   lo dice. Primero las condiciones que hacen que cualquier cambio sobreviva
+   el año, después la práctica regular en la sala, después la capacidad que
+   la sostiene, y al final la extensión al resto de la comunidad.
+   Lo que hay detrás: una práctica de aula sin tiempo protegido ni instancia
+   de decisión se cae cuando el calendario se aprieta, y una secuencia regular
+   se asocia con mejores resultados que una serie de actividades sueltas. */
+const TRAMOS = [
+  { n:'Condiciones que sostienen cualquier cambio', items:['4.2','4.1'],
+    por:'Sin tiempo protegido ni una instancia donde se decida, lo que se instale este año se cae cuando el calendario se aprieta. Por eso va primero, aunque no se vea en la sala.' },
+  { n:'Práctica regular en la sala', items:['1.1','1.2'],
+    por:'Una secuencia regular se asocia con mejores resultados que una serie de actividades sueltas, y es lo que ocurre en la sala lo que los estudiantes viven.' },
+  { n:'Capacidad que sostiene esa práctica', items:['2.2','2.1','2.3'],
+    por:'La formación se traduce en práctica cuando hay acompañamiento después. Instalar primero la rutina y luego sostenerla evita formar sobre algo que todavía no existe.' },
+  { n:'Consistencia entre los adultos y los espacios', items:['1.3','3.1','3.3'],
+    por:'Una vez que la sala funciona, lo que rompe la experiencia del estudiante es encontrar criterios distintos entre un adulto y otro, o entre la sala y el patio.' },
+  { n:'Extensión a la comunidad y continuidad', items:['5.1','5.2','5.3','3.2','2.4','4.3'],
+    por:'Estas prácticas rinden cuando hay algo instalado que extender. Antes de eso compiten por el mismo tiempo que lo anterior necesita.' }
+];
+
+/* Orden del artículo 16 D, para desempatar cuando dos ítems quedan igual de bajos. */
+const ORDEN_16D = ['4.3','2.1','3.3','2.4','5.3','1.1','5.2','5.1','1.2','1.3','2.2','2.3','3.1','3.2','4.1','4.2'];
+/* Los siete contenidos mínimos del artículo 16 D, con las preguntas de este
+   instrumento que los respaldan. La calendarización anual de las acciones del plan
+   es una decisión que el establecimiento toma al escribirlo, así que ninguna
+   pregunta la cubre y el informe lo dice. */
+const MAPA_16D = [
+  ['a','Coordinación con el área técnico-pedagógica','4.3',1],
+  ['b','Información, difusión y formación para todos los estamentos','2.1 y 3.3',1],
+  ['c','Promoción del bienestar y la salud mental','2.4',1],
+  ['d','Gestión colaborativa de conflictos entre estudiantes','5.3',1],
+  ['e','Calendarización anual de las acciones del plan','',0],
+  ['f','Estudiantes como sujetos activos','5.2',1],
+  ['g','Formación para padres, madres y apoderados','5.1',1]
+];
+
+const CARGOS = ['Director o directora','Sostenedor o representante legal','Jefatura técnico-pedagógica (UTP)',
+  'Coordinación o encargatura de convivencia','Inspectoría general','Jefatura de ciclo','Docente','Otro'];
+const CICLOS = ['Educación parvularia','Educación básica','Educación media'];
+
+const ITEMS = DIMS.flatMap(d => d.items.map(i => ({...i, dim:d.id})));
+const CAPA1 = ITEMS.filter(i => i.c1);
+const CAPA2 = ITEMS.filter(i => !i.c1);
+const DEPL = {PS:'Particular subvencionado',MUN:'Municipal',PP:'Particular pagado',SLEP:'Servicio local',CAD:'Administración delegada'};
+
+/* ======================= estado ======================= */
+const st = { col:null, manual:null, cargo:null, ciclo:null, r:{}, o:{}, dif:{}, lead:null, fase:'portada', idx:0, verOpc:false };
+let DATA = null;
+
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sinTilde = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const folio = () => 'AD-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
+const FOLIO = folio();
+
+/* ======================= cálculo ======================= */
+const esNum = v => typeof v === 'number';
+
+function banda(dim){
+  const its = DIMS.find(d => d.id === dim).items;
+  const vals = its.map(i => st.r[i.id]).filter(esNum);
+  const noSe = its.length - vals.length;
+  if (noSe >= 2 || vals.length === 0) return {tipo:'sin', txt:'Sin información suficiente', clase:'b0', val:null};
+  if (Math.max(...vals) - Math.min(...vals) >= 2) return {tipo:'disp', txt:'Avance desigual', clase:'b0', val:prom(vals)};
+  const p = vals.reduce((a,b)=>a+b,0) / (3*vals.length);
+  if (p < 0.34) return {tipo:'b1', txt:'Prácticas aisladas', clase:'b1', val:prom(vals)};
+  if (p < 0.67) return {tipo:'b2', txt:'En instalación', clase:'b2', val:prom(vals)};
+  return {tipo:'b3', txt:'Prácticas instaladas', clase:'b3', val:prom(vals)};
+}
+const prom = v => v.reduce((a,b)=>a+b,0)/v.length;
+
+const porId = id => ITEMS.find(i => i.id === id) || OPC.find(i => i.id === id);
+
+/* Recorre los tramos en orden y devuelve los vacíos, cada uno con el tramo
+   del que viene. Nunca salta un tramo anterior que todavía tiene vacíos. */
+function ruta(umbral){
+  const out = [];
+  for (const t of TRAMOS) {
+    const v = t.items.filter(id => esNum(st.r[id]) && st.r[id] <= umbral)
+                     .sort((a,b) => st.r[a] - st.r[b]);
+    for (const id of v) out.push({ it: porId(id), tramo: t });
+  }
+  return out;
+}
+function rutaCompleta(){
+  let r = ruta(1);
+  if (r.length < 3) {
+    const ya = new Set(r.map(x => x.it.id));
+    r = r.concat(ruta(2).filter(x => !ya.has(x.it.id)));
+  }
+  return r;
+}
+function instalado(){
+  return ITEMS.filter(i => esNum(st.r[i.id]) && st.r[i.id] >= 2)
+    .sort((a,b) => st.r[b.id] - st.r[a.id]).slice(0,5);
+}
+const ciclos = () => ITEMS.filter(i => st.dif[i.id]).length;
+const noSabe = () => ITEMS.filter(i => st.r[i.id] === 'nose').length;
+
+/* ======================= radar ======================= */
+function radar(){
+  const W = 340, H = 268, CX = W/2, CY = 126, R = 82;
+  const ejes = DIMS.map(d => ({d, b: banda(d.id)}));
+  const n = ejes.length;
+  const pt = (i, rad) => {
+    const a = -Math.PI/2 + i * 2*Math.PI/n;
+    return [CX + Math.cos(a)*rad, CY + Math.sin(a)*rad];
+  };
+  let g = '';
+  /* anillos que marcan el criterio, no la comparación con otros colegios */
+  [1,2,3].forEach(lv => {
+    const p = Array.from({length:n}, (_,i) => pt(i, R*lv/3).map(v=>v.toFixed(1)).join(',')).join(' ');
+    g += `<polygon points="${p}" fill="none" stroke="var(--linea)" stroke-width="1"/>`;
+  });
+  ejes.forEach((_,i) => {
+    const [x,y] = pt(i, R);
+    g += `<line x1="${CX}" y1="${CY}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(--linea)" stroke-width="1"/>`;
+  });
+  const vals = ejes.map(e => e.b.val == null ? 0 : e.b.val);
+  const poly = vals.map((v,i) => pt(i, R*Math.max(v,0.08)/3).map(x=>x.toFixed(1)).join(',')).join(' ');
+  g += `<polygon points="${poly}" fill="var(--verde)" fill-opacity=".22" stroke="var(--verde-hondo)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  vals.forEach((v,i) => {
+    const [x,y] = pt(i, R*Math.max(v,0.08)/3);
+    g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="var(--papel)" stroke="var(--verde-hondo)" stroke-width="2.5"/>`;
+  });
+  ejes.forEach((e,i) => {
+    const [x,y] = pt(i, R+18);
+    const an = x < CX-8 ? 'end' : x > CX+8 ? 'start' : 'middle';
+    const dy = y < CY-40 ? -3 : y > CY+40 ? 11 : 4;
+    g += `<text x="${x.toFixed(1)}" y="${(y+dy).toFixed(1)}" text-anchor="${an}" font-size="12.5" font-weight="800" fill="var(--tinta)">${esc(e.d.corto)}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:360px;display:block;margin:0 auto" role="img"
+    aria-label="Perfil de las cinco dimensiones del establecimiento">${g}</svg>`;
+}
+
+/* ======================= vistas ======================= */
+function pintarPasos(){
+  const total = 2 + CAPA1.length + CAPA2.length + 2;
+  let n = 0;
+  if (st.fase === 'colegio') n = 1;
+  else if (st.fase === 'quien') n = 2;
+  else if (st.fase === 'c1') n = 2 + st.idx + 1;
+  else if (st.fase === 'espejo') n = 2 + CAPA1.length;
+  else if (st.fase === 'c2') n = 2 + CAPA1.length + st.idx + 1;
+  else if (st.fase === 'opc') n = total - 2;
+  else if (st.fase === 'lead') n = total - 1;
+  else if (st.fase === 'informe') n = total;
+  const ps = $('#pasos');
+  ps.hidden = (st.fase === 'portada' || st.fase === 'informe');
+  ps.innerHTML = Array.from({length:total}, (_,i) => `<div class="paso${i<n?' on':''}"></div>`).join('');
+  const c = $('#cuenta');
+  if (st.fase === 'c1' || st.fase === 'c2') {
+    const hechas = st.fase === 'c1' ? st.idx+1 : CAPA1.length + st.idx + 1;
+    c.hidden = false; c.textContent = `Pregunta ${hechas} de ${ITEMS.length}`;
+  } else c.hidden = true;
+}
+function ir(fase, idx){ st.fase = fase; if (idx != null) st.idx = idx; render(); window.scrollTo({top:0,behavior:'instant'}); }
+
+function render(){
+  pintarPasos();
+  ({portada:vPortada, colegio:vColegio, quien:vQuien, c1:vPregunta, espejo:vEspejo,
+    c2:vPregunta, opc:vOpcional, lead:vLead, informe:vInforme})[st.fase]();
+}
+
+const AVISO_CONF = `<div class="conf"><div class="ic">✓</div><div>
+  <b>Tus respuestas son confidenciales.</b> El informe llega solo al correo que nos dejes.
+  No entregamos resultados individuales a tu sostenedor, al Ministerio ni a ninguna otra institución.
+  Si más adelante publicamos un panorama general, va siempre agregado y sin identificar establecimientos.
+  Puedes pedirnos que borremos tus datos cuando quieras.</div></div>`;
+
+function vPortada(){
+  app.innerHTML = `
+  <div class="intro">
+    <div class="ojo">Convivencia escolar · 2027</div>
+    <h1>Tu punto de partida para 2027</h1>
+    <p class="sub">Seis minutos y dieciséis preguntas sobre las prácticas que sostienen la convivencia en tu colegio.
+    Recibes un informe con tu perfil y tres estrategias para el próximo año, cada una con el mes en que conviene trabajarla.</p>
+  </div>
+  <div class="card" style="margin-top:20px;padding:18px 20px">
+    <div class="lista">
+      <div class="li"><span class="pt"></span><span>Cada pregunta describe cuatro situaciones. Eliges la que se parece a la de tu colegio hoy.</span></div>
+      <div class="li"><span class="pt"></span><span>Las preguntas describen prácticas observables, de modo que responderlas es constatar un hecho.</span></div>
+      <div class="li"><span class="pt"></span><span>Cada respuesta queda mapeada al contenido del Plan de Gestión de Convivencia que le corresponde.</span></div>
+    </div>
+  </div>
+  <div style="margin-top:14px">${AVISO_CONF}</div>
+  <div class="acc"><button class="btn p" id="go">Empezar</button></div>`;
+  $('#go').onclick = () => ir('colegio');
+}
+
+function vColegio(){
+  app.innerHTML = `
+  <section class="step">
+    <p class="q">¿En qué colegio trabajas?</p>
+    <p class="hint">Escribe el nombre o el RBD.</p>
+    <div class="search">
+      <input id="q" type="search" autocomplete="off" placeholder="Cargando el directorio…" aria-label="Buscar colegio">
+      <div class="res" id="res" hidden role="listbox"></div>
+    </div>
+    <div id="sel" style="margin-top:12px" ${st.col||st.manual?'':'hidden'}></div>
+    <div id="manualBox" hidden style="margin-top:14px">
+      <div class="card" style="padding:16px 17px">
+        <label style="font-size:.82rem;font-weight:700;display:block;margin-bottom:4px">Nombre del establecimiento</label>
+        <input id="mNom" type="text" style="width:100%;padding:12px 14px;border:1.5px solid var(--linea);border-radius:12px">
+        <label style="font-size:.82rem;font-weight:700;display:block;margin:12px 0 4px">Comuna</label>
+        <input id="mCom" type="text" style="width:100%;padding:12px 14px;border:1.5px solid var(--linea);border-radius:12px">
+      </div>
+    </div>
+    <p style="margin-top:12px"><button type="button" id="noList" class="btn s" style="padding:9px 16px;font-size:.84rem">No encuentro mi colegio</button></p>
+    <div class="acc"><button class="btn p" id="sig" ${st.col||st.manual?'':'disabled'}>Continuar</button></div>
+  </section>`;
+  pintarSel();
+  $('#sig').onclick = () => ir('quien');
+  $('#noList').onclick = () => {
+    $('#manualBox').hidden = false; $('#noList').hidden = true;
+    const upd = () => {
+      const n = $('#mNom').value.trim();
+      st.manual = n ? {nombre:n, comuna:$('#mCom').value.trim()} : null;
+      st.col = null; $('#sig').disabled = !st.manual;
+    };
+    $('#mNom').oninput = upd; $('#mCom').oninput = upd;
+  };
+  const inp = $('#q');
+  (async () => {
+    if (!DATA) { try { DATA = await (await fetch('establecimientos.json')).json(); } catch(e){ DATA = null; } }
+    inp.placeholder = DATA ? `Busca entre ${DATA.ee.length.toLocaleString('es-CL')} establecimientos`
+                           : 'No se pudo cargar el directorio. Usa el botón de más abajo.';
+  })();
+  inp.addEventListener('input', e => {
+    const box = $('#res'), v = e.target.value.trim();
+    if (!DATA || v.length < 2) { box.hidden = true; return; }
+    const t = sinTilde(v), num = /^\d+$/.test(t), out = [];
+    for (const x of DATA.ee) { if (num ? x[0].startsWith(t) : sinTilde(x[1]).includes(t)) { out.push(x); if (out.length >= 30) break; } }
+    box.innerHTML = out.length ? out.map((x,i) => {
+      const cm = DATA.comunas[x[2]];
+      return `<button data-i="${i}"><span class="nm">${esc(x[1])}</span><span class="mt">${esc(cm[0])}, ${esc(DATA.regiones[cm[1]])} · RBD ${esc(x[0])} · ${esc(DEPL[x[3]]||x[3])}</span></button>`;
+    }).join('') : '<div class="vacio">No encontramos ese colegio. Prueba con otra parte del nombre o con el RBD.</div>';
+    box.hidden = false;
+    box.querySelectorAll('[data-i]').forEach(bt => bt.onclick = () => {
+      const x = out[+bt.dataset.i], cm = DATA.comunas[x[2]];
+      st.col = {rbd:x[0], nombre:x[1], comuna:cm[0], region:DATA.regiones[cm[1]], dep:DEPL[x[3]]||x[3], mat:x[4]};
+      st.manual = null; box.hidden = true; inp.value = '';
+      $('#sig').disabled = false; pintarSel();
+    });
+  });
+}
+function pintarSel(){
+  const s = $('#sel'); if (!s) return;
+  const c = st.col, m = st.manual;
+  if (!c && !m) { s.hidden = true; return; }
+  s.hidden = false;
+  s.innerHTML = `<div class="elegido"><div><span class="nm">${esc(c?c.nombre:m.nombre)}</span>
+    <span class="mt">${c ? esc(c.comuna)+', '+esc(c.region)+' · RBD '+esc(c.rbd)+' · '+esc(c.dep)+(c.mat?' · '+c.mat+' estudiantes':'') : esc(m.comuna||'')}</span></div></div>`;
+}
+
+function vQuien(){
+  app.innerHTML = `
+  <section class="step">
+    <p class="q">¿Desde qué rol respondes?</p>
+    <p class="hint">Queda escrito en el informe, porque lo que se ve desde cada cargo es distinto.</p>
+    <div class="opts" id="cg">${CARGOS.map(c => `<button class="opt${st.cargo===c?' sel':''}" data-v="${esc(c)}"><span class="t">${esc(c)}</span></button>`).join('')}</div>
+    <p class="q" style="margin-top:26px">¿Desde qué ciclo respondes?</p>
+    <p class="hint">Las prácticas suelen estar en momentos distintos en cada ciclo, así que el informe se arma sobre uno. Al terminar puedes responder por otro y comparar.</p>
+    <div class="opts" id="cc">${CICLOS.map(c => `<button class="opt${st.ciclo===c?' sel':''}" data-v="${esc(c)}"><span class="t">${esc(c)}</span></button>`).join('')}</div>
+    <div class="acc"><button class="btn p" id="sig" ${st.cargo&&st.ciclo?'':'disabled'}>Empezar las preguntas</button>
+      <button class="btn s" id="atras">Atrás</button></div>
+  </section>`;
+  const bind = (sel, key) => $(sel).querySelectorAll('[data-v]').forEach(b => b.onclick = () => {
+    st[key] = b.dataset.v;
+    $(sel).querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+    b.classList.add('sel'); $('#sig').disabled = !(st.cargo && st.ciclo);
+  });
+  bind('#cg','cargo'); bind('#cc','ciclo');
+  $('#sig').onclick = () => ir('c1', 0);
+  $('#atras').onclick = () => ir('colegio');
+}
+
+function vPregunta(){
+  const lista = st.fase === 'c1' ? CAPA1 : CAPA2;
+  const it = lista[st.idx];
+  const dim = DIMS.find(d => d.id === it.dim);
+  const v = st.r[it.id];
+  app.innerHTML = `
+  <section class="step">
+    <div class="dimtag">${esc(dim.nombre)}</div>
+    <p class="q">${esc(it.t)}</p>
+    ${it.alc ? `<p class="alcance">${esc(it.alc)}</p>` : '<div style="height:6px"></div>'}
+    <button class="marcaciclo${st.dif[it.id]?' sel':''}" id="dif">
+      <span class="bx">${st.dif[it.id]?'✓':''}</span>
+      <span>Esto funciona distinto en otros ciclos. Responde por ${esc((st.ciclo||'').toLowerCase())} y lo dejamos anotado.</span>
+    </button>
+    <div class="opts" id="ops">${it.n.map((d,i) =>
+      `<button class="opt plano${v===i?' sel':''}" data-i="${i}"><span class="d">${esc(d)}</span></button>`).join('')}</div>
+    <div class="salidas">
+      <button class="salida${v==='nose'?' sel':''}" data-s="nose">No lo sé con certeza</button>
+      <button class="salida${v==='na'?' sel':''}" data-s="na">No aplica</button>
+    </div>
+    <div class="acc"><button class="btn s" id="atras">Atrás</button></div>
+  </section>`;
+  const avanzar = () => {
+    if (st.idx + 1 < lista.length) ir(st.fase, st.idx + 1);
+    else ir(st.fase === 'c1' ? 'espejo' : 'opc', 0);
+  };
+  $('#dif').onclick = () => { st.dif[it.id] = !st.dif[it.id]; render(); };
+  $('#ops').querySelectorAll('[data-i]').forEach(b => b.onclick = () => { st.r[it.id] = +b.dataset.i; avanzar(); });
+  app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { st.r[it.id] = b.dataset.s; delete st.dif[it.id]; avanzar(); });
+  $('#atras').onclick = () => {
+    if (st.idx > 0) ir(st.fase, st.idx - 1);
+    else if (st.fase === 'c2') ir('espejo');
+    else ir('quien');
+  };
+}
+
+function vEspejo(){
+  const lns = CAPA1.map(i => {
+    const v = st.r[i.id], d = DIMS.find(x => x.id === i.dim);
+    const tx = esNum(v) ? i.n[v] : v === 'nose' ? 'No lo sabes con certeza.' : 'No aplica en tu establecimiento.';
+    return `<div class="ln"><div class="dd">${esc(d.corto)}</div><div class="tx">${esc(tx)}${st.dif[i.id]?' <i style="color:var(--tinta-tenue)">Funciona distinto en otros ciclos.</i>':''}</div></div>`;
+  }).join('');
+  app.innerHTML = `
+  <section class="step">
+    <div class="dimtag">Primera mirada</div>
+    <p class="q">Esto es lo que marcaste</p>
+    <p class="hint">Cinco preguntas no alcanzan para ubicar a un colegio en un nivel, así que no lo hacemos. Lo que sí podemos hacer es devolvértelo ordenado.</p>
+    <div class="card" style="padding:4px 18px 10px">${lns}</div>
+    <div class="card" style="margin-top:16px;padding:18px 20px">
+      <p style="font-weight:800;font-size:1.02rem;line-height:1.3">Las once preguntas que faltan son las que permiten armar el informe</p>
+      <p style="font-size:.9rem;color:var(--tinta-media);margin-top:7px;line-height:1.5">Con las dieciséis se puede ver el perfil completo de tu establecimiento, cuál es la estrategia que más te conviene trabajar primero y en qué mes conviene hacerlo.</p>
+    </div>
+    <div class="acc"><button class="btn p" id="sig">Seguir, faltan cuatro minutos</button>
+      <button class="btn s" id="atras">Atrás</button></div>
+  </section>`;
+  $('#sig').onclick = () => ir('c2', 0);
+  $('#atras').onclick = () => ir('c1', CAPA1.length - 1);
+}
+
+function vOpcional(){
+  if (!st.verOpc) {
+    app.innerHTML = `
+    <section class="step">
+      <div class="dimtag">Opcional</div>
+      <p class="q">¿Estás armando el Plan de Gestión 2027?</p>
+      <p class="hint">Hay tres preguntas más que el plan te va a pedir igual. Si las respondes, esa parte del informe llega en formato de insumo para el plan.</p>
+      <div class="card" style="padding:16px 18px"><div class="lista">
+        ${OPC.map(o => `<div class="li"><span class="pt"></span><span>${esc(o.t)}</span></div>`).join('')}
+      </div></div>
+      <div class="acc"><button class="btn p" id="si">Sí, son tres más</button>
+        <button class="btn s" id="no">Saltar e ir al informe</button></div>
+    </section>`;
+    $('#si').onclick = () => { st.verOpc = true; st.idx = 0; render(); window.scrollTo(0,0); };
+    $('#no').onclick = () => ir('lead');
+    return;
+  }
+  const it = OPC[st.idx], v = st.o[it.id];
+  app.innerHTML = `
+  <section class="step">
+    <div class="dimtag">Gestión del Plan 2027 · ${st.idx+1} de ${OPC.length}</div>
+    <p class="q">${esc(it.t)}</p>
+    ${it.alc ? `<p class="alcance">${esc(it.alc)}</p>` : '<div style="height:6px"></div>'}
+    <div class="opts" id="ops">${it.n.map((d,i) =>
+      `<button class="opt plano${v===i?' sel':''}" data-i="${i}"><span class="d">${esc(d)}</span></button>`).join('')}</div>
+    <div class="salidas"><button class="salida${v==='nose'?' sel':''}" data-s="nose">No lo sé con certeza</button></div>
+    <div class="acc"><button class="btn s" id="atras">Atrás</button></div>
+  </section>`;
+  const avanzar = () => { if (st.idx + 1 < OPC.length) { st.idx++; render(); window.scrollTo(0,0); } else ir('lead'); };
+  $('#ops').querySelectorAll('[data-i]').forEach(b => b.onclick = () => { st.o[it.id] = +b.dataset.i; avanzar(); });
+  app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { st.o[it.id] = b.dataset.s; avanzar(); });
+  $('#atras').onclick = () => { if (st.idx > 0) { st.idx--; render(); } else { st.verOpc = false; render(); } };
+}
+
+function vLead(){
+  app.innerHTML = `
+  <section class="step">
+    <div class="dimtag">Último paso</div>
+    <p class="q">¿A qué correo te mandamos el informe?</p>
+    <p class="hint">El informe aparece en pantalla apenas lo pidas, y te llega una copia para guardarla y compartirla con tu equipo.</p>
+    <div style="margin-bottom:16px">${AVISO_CONF}</div>
+    <form class="env" id="f">
+      <div class="par">
+        <div><label for="nom">Tu nombre</label><input id="nom" type="text" autocomplete="name" required></div>
+        <div><label for="mail">Correo</label><input id="mail" type="email" autocomplete="email" required></div>
+      </div>
+      <div><label for="tel">Teléfono <span style="font-weight:400;color:var(--tinta-tenue)">(opcional)</span></label><input id="tel" type="tel" autocomplete="tel"></div>
+      <label class="consent"><input type="checkbox" id="ok1" required>
+        <span>Autorizo a Fundación Eventuras a enviarme este informe por correo.</span></label>
+      <label class="consent"><input type="checkbox" id="ok2">
+        <span>Quiero además recibir material sobre convivencia y formación docente. Puedo darme de baja cuando quiera.</span></label>
+      <div class="acc"><button class="btn p" type="submit" id="ver">Ver mi informe</button>
+        <button class="btn s" type="button" id="atras">Atrás</button></div>
+      <p style="font-size:.78rem;color:var(--tinta-tenue);line-height:1.5">
+        Responsable del tratamiento: Corporación Educacional Eduventuras.
+        <a href="${CONTACTO.privacidad}" target="_blank" rel="noopener">Política de privacidad</a>.
+        El informe se genera automáticamente a partir de tus respuestas.</p>
+      <div id="estado"></div>
+    </form>
+  </section>`;
+  $('#atras').onclick = () => { st.verOpc = Object.keys(st.o).length > 0; ir('opc', Math.max(0, OPC.length-1)); };
+  $('#f').onsubmit = e => {
+    e.preventDefault();
+    st.lead = {nombre:$('#nom').value.trim(), correo:$('#mail').value.trim(), tel:$('#tel').value.trim(), mkt:$('#ok2').checked};
+    ir('informe');
+    enviar();
+  };
+}
+
+const TEXTO_CONSENTIMIENTO = 'Autorizo a Fundación Eventuras a enviarme este informe por correo.';
+const TEXTO_MARKETING = 'Quiero además recibir material sobre convivencia y formación docente.';
+
+function payload(){
+  const R = rutaCompleta(), foco = R[0] || null;
+  return {
+    folio: FOLIO,
+    fecha: new Date().toISOString(),
+    version: '2026-11-04',
+    colegio: st.col || st.manual || null,
+    cargo: st.cargo, ciclo: st.ciclo,
+    respuestas: st.r,
+    opcionales: st.o,
+    distintoCiclo: Object.keys(st.dif).filter(k => st.dif[k]),
+    noSabe: ITEMS.filter(i => st.r[i.id] === 'nose').map(i => i.id),
+    bandas: Object.fromEntries(DIMS.map(d => { const b = banda(d.id);
+      return [d.id, {nombre:d.nombre, estado:b.txt, valor:b.val == null ? null : Math.round(b.val*100)/100}]; })),
+    foco: foco ? {id:foco.it.id, titulo:foco.it.t, tramo:foco.tramo.n,
+                  hoy:foco.it.n[st.r[foco.it.id]],
+                  siguiente: st.r[foco.it.id] < 3 ? foco.it.n[st.r[foco.it.id]+1] : null} : null,
+    acciones: R.slice(0,3).map(m => ({id:m.it.id, titulo:m.it.mov[0], detalle:m.it.mov[1], ventana:m.it.mov[2]})),
+    lecturas: lecturas().map(x => x.t),
+    instalado: instalado().map(i => ({id:i.id, titulo:i.t})),
+    contacto: st.lead,
+    consentimiento: {informe: TEXTO_CONSENTIMIENTO, marketing: st.lead && st.lead.mkt ? TEXTO_MARKETING : null}
+  };
+}
+
+async function enviar(){
+  const cuerpo = payload();
+  const est = $('#estadoEnvio');
+  if (!ENDPOINT) { if (est) est.innerHTML = `<div class="estado ok">Informe generado. El envío por correo se activa al conectar el backend.</div>`; return; }
+  try {
+    await fetch(ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(cuerpo)});
+    if (est) est.innerHTML = `<div class="estado ok">Te mandamos una copia a ${esc(st.lead.correo)}.</div>`;
+  } catch(e) {
+    if (est) est.innerHTML = `<div class="estado err">No pudimos enviar la copia por correo. El informe de abajo es el mismo, puedes imprimirlo o guardarlo como PDF.</div>`;
+  }
+}
+
+/* ======================= informe ======================= */
+/* Lecturas cruzadas. Cada una se dispara solo si se cumplen sus condiciones exactas,
+   muestra las respuestas en que se apoya y dice qué criterio usa. Ninguna conclusión
+   sale de algo que la persona no haya declarado. */
+function lecturas(){
+  const v = id => st.r[id], n = id => esNum(v(id));
+  const pr = dim => { const b = banda(dim); return b.val; };
+  const L = [];
+
+  if (pr('liderazgo') != null && pr('sala') != null && pr('liderazgo') >= 2 && pr('sala') <= 1)
+    L.push({ t:'Lo definido todavía no llega a la sala',
+      r:['4.1 y 4.2, sobre dónde se decide y qué tiempo hay', '1.1 y 1.2, sobre lo que ocurre cada semana en la sala'],
+      l:'Las respuestas de gestión están por sobre las de aula. El trabajo está puesto en la estructura y la práctica semanal avanza más atrás.',
+      i:'Conviene usar la estructura que ya existe para proteger una rutina de aula concreta, en vez de sumar definiciones nuevas.' });
+
+  if (pr('sala') != null && n('4.2') && pr('sala') >= 2 && v('4.2') <= 1)
+    L.push({ t:'Lo que funciona hoy depende de las personas',
+      r:['1.1 y 1.2, sobre la práctica de aula', '4.2, sobre el tiempo asignado al equipo'],
+      l:'Hay práctica de aula declarada y todavía sin tiempo protegido ni presupuesto asociados.',
+      i:'Una práctica sostenida por voluntad personal se interrumpe con el próximo cambio de equipo o con el próximo calendario apretado.' });
+
+  if (n('2.1') && n('2.2') && v('2.1') >= 2 && v('2.2') <= 1)
+    L.push({ t:'Hay formación y todavía no hay acompañamiento después',
+      r:['2.1, sobre la formación del equipo', '2.2, sobre la observación en aula'],
+      l:'El equipo recibe formación y nadie entra después a la sala a mirar cómo se está aplicando.',
+      i:'La formación se traduce en práctica cuando hay observación y una conversación posterior. Sin ese paso, el efecto de lo ya invertido queda a medias.' });
+
+  if (n('1.1') && n('1.2') && v('1.1') >= 2 && v('1.2') <= 1)
+    L.push({ t:'Hay frecuencia y todavía no hay secuencia',
+      r:['1.1, sobre la regularidad del espacio semanal', '1.2, sobre el orden de los contenidos'],
+      l:'El tiempo está ganado, que es la parte difícil. Lo que falta es el orden de los contenidos dentro de ese tiempo.',
+      i:'Una secuencia ordenada se asocia con mejores resultados que una serie de sesiones sueltas, y ordenar lo que ya se hace cuesta mucho menos que conseguir el bloque.' });
+
+  if (n('1.2') && n('3.1') && v('1.2') >= 2 && v('3.1') <= 1)
+    L.push({ t:'La sala tiene criterio y los adultos todavía no comparten lenguaje',
+      r:['1.2, sobre los contenidos del nivel', '3.1, sobre el lenguaje común entre adultos'],
+      l:'Lo trabajado en la sala no se sostiene en los pasillos ni en la conversación con las familias.',
+      i:'El estudiante recibe un criterio en clases y otro distinto fuera de ella, y esa diferencia borra parte de lo ganado.' });
+
+  const nc = ciclos();
+  if (nc >= 3)
+    L.push({ t:'Lo instalado vive en un ciclo y todavía no cruza al resto',
+      r:[nc+' prácticas marcadas como distintas en otros ciclos'],
+      l:'El establecimiento tiene prácticas que funcionan y que están concentradas en una parte.',
+      i:'Extender algo que ya funciona adentro del mismo colegio cuesta bastante menos que instalarlo de cero, y suele ser el movimiento de mejor rendimiento del año.' });
+
+  const ns = noSabe();
+  if (ns >= 3)
+    L.push({ t:'Hay decisiones de convivencia que no pasan por quien responde',
+      r:[ns+' preguntas marcadas como algo que no se sabe con certeza'],
+      l:'Las respuestas que faltan corresponden a horario, presupuesto, formación o planificación curricular.',
+      i:'Esa distancia entre quien conduce la convivencia y quien decide esos temas es en sí misma una condición que conviene revisar.' });
+
+  return L.slice(0,3);
+}
+
+function vInforme(){
+  const c = st.col || st.manual;
+  const bs = DIMS.map(d => ({d, b:banda(d.id)}));
+  const R = rutaCompleta();
+  const foco = R[0] || null;
+  const tres = R.slice(0,3);
+  const L = lecturas();
+  const inst = instalado();
+  const hoy = new Date().toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'});
+  const esEj = st.lead && st.lead.nombre === 'Ejemplo';
+
+  const leyenda = bs.map(({d,b}) =>
+    `<div class="f"><span class="nm">${esc(d.nombre)}</span><span class="bn ${b.clase}">${esc(b.txt)}</span></div>`).join('');
+
+  app.innerHTML = `
+  <div class="card prop">
+    <div class="cab">
+      <div class="k">Autodiagnóstico de convivencia</div>
+      <h2>${esc(c ? c.nombre : 'Tu establecimiento')}</h2>
+      <div class="para">${esc([c&&c.comuna, c&&c.region, c&&c.rbd?('RBD '+c.rbd):null].filter(Boolean).join(' · '))}</div>
+    </div>
+    <div class="cuerpo">
+
+      <div class="bloq">
+        <h3>Tu perfil</h3>
+        <p class="lead">Las dieciséis preguntas que respondiste se agrupan en cinco dimensiones. El estado de cada una resume en qué momento están sus prácticas, según lo que marcaste.</p>
+        <div class="radarbox">
+          <div>${radar()}</div>
+          <div class="leyenda">${leyenda}</div>
+        </div>
+        <div class="glosa">
+          <div><b>Prácticas aisladas</b> · ocurren por iniciativa de alguien, sin un formato definido que se repita.</div>
+          <div><b>En instalación</b> · hay formato definido y todavía no se aplica de manera pareja.</div>
+          <div><b>Prácticas instaladas</b> · se aplican de forma regular y sobreviven a los cambios de persona.</div>
+          <div><b>Avance desigual</b> · dentro de la misma dimensión conviven prácticas muy instaladas con otras que no han partido.</div>
+        </div>
+      </div>
+
+      ${L.length ? `<div class="bloq"><h3>Qué se lee al cruzar tus respuestas</h3>
+        <p class="lead">El gráfico de arriba muestra cada dimensión por separado. Lo que sigue aparece al mirar dos prácticas juntas. Cada lectura indica las preguntas en que se apoya.</p>
+        <div class="lecturas">${L.map(x => `<div class="lec">
+          <div class="lt">${esc(x.t)}</div>
+          <div class="lr">${x.r.map(s => `<span>${esc(s)}</span>`).join('')}</div>
+          <div class="ll">${esc(x.l)}</div>
+          <div class="li2">${esc(x.i)}</div>
+        </div>`).join('')}</div>
+      </div>` : `<div class="bloq"><h3>Qué se lee al cruzar tus respuestas</h3>
+        <p class="lead">Tus respuestas no muestran por ahora ninguno de los cruces que este instrumento está construido para detectar. El perfil de arriba y la ruta de abajo son la lectura que corresponde hacer con esta información.</p></div>`}
+
+      ${foco ? `<div class="bloq"><h3>Por dónde conviene partir</h3>
+        <p class="lead">De todo lo anterior, esta es la práctica por la que sugerimos empezar. El orden no sale de tu colegio, sale de un criterio que declaramos acá, de modo que puedas discutirlo. Primero las condiciones que hacen que un cambio sobreviva el año, después la práctica regular en la sala, después la capacidad que la sostiene, y al final la extensión al resto de la comunidad.</p>
+        <div class="foco">
+          <div class="k">${esc(foco.tramo.n)}</div>
+          <div class="t">${esc(foco.it.t)}</div>
+          <div class="hoy"><b>Lo que declaraste:</b> ${esc(foco.it.n[st.r[foco.it.id]])}</div>
+          ${st.r[foco.it.id] < 3 ? `<div class="meta"><b>El paso siguiente:</b> ${esc(foco.it.n[st.r[foco.it.id]+1])}</div>` : ''}
+          <div class="porq"><b>Por qué este tramo va primero.</b> ${esc(foco.tramo.por)}</div>
+        </div></div>` : ''}
+
+      ${tres.length ? `<div class="bloq"><h3>Tres acciones, en este orden</h3>
+        <p class="lead">La primera es la que acabas de ver. Las otras dos siguen en la misma ruta, ordenadas por el mismo criterio. Cada una está escrita para que la pueda ejecutar el equipo que ya tienes.</p>
+        <div class="sp5">${tres.map((m,i) => `<div class="it"><div class="n">${i+1}</div><div>
+          <div class="tt">${esc(m.it.mov[0])}</div>
+          <div class="dd">${esc(m.it.mov[1])}</div>
+          <div class="orig">Viene de la pregunta ${esc(m.it.id)}, ${esc(m.it.t.toLowerCase())}</div>
+          <span class="mes">${esc(m.it.mov[2])}</span></div></div>`).join('')}</div>
+        <p class="nota-pie">La ventana sugerida indica cuándo cuesta menos instalar cada acción, considerando la jornada de planificación docente de comienzos de marzo y el cierre de la Fase Estratégica del PME el 20 de marzo. Las fechas las define el establecimiento.</p>
+      </div>` : ''}
+
+      ${inst.length ? `<div class="bloq"><h3>Lo que ya tienes instalado</h3>
+        <p class="lead">Prácticas que marcaste en los dos niveles más altos. Son la base sobre la que se apoyan las tres acciones de arriba.</p>
+        <div class="lista">${inst.map(i => `<div class="li"><span class="pt"></span><span>${esc(i.t)}</span></div>`).join('')}</div>
+      </div>` : ''}
+
+      <div class="bloq"><h3>Qué de esto te sirve para el Plan de Gestión 2027</h3>
+        <p class="lead">Todo lo anterior describe prácticas del colegio. Acá es donde eso se conecta con lo que la ley va a pedir. La Ley 21.809 fija siete contenidos mínimos para el Plan de Gestión de Convivencia Educativa, y los establecimientos que reciben subvención tienen plazo hasta el 1 de abril de 2027 para adecuarse. La tabla cruza esos siete contenidos con las preguntas que acabas de responder, identificadas por el número que aparece al lado.</p>
+        <div class="plan">
+          <div class="r enc"><span>Contenido mínimo del plan</span><b>Preguntas</b></div>
+          ${MAPA_16D.map(([l,t,ids,ok]) => `<div class="r"><span><i>${esc(l)})</i> ${esc(t)}</span>${ok?`<b>${esc(ids)}</b>`:`<b class="falta">sin cubrir</b>`}</div>`).join('')}
+        </div>
+        <div class="falta-box">
+          <div class="ft">El contenido que este autodiagnóstico no cubre</div>
+          <p>La calendarización anual de las acciones del plan. Estas preguntas describen lo que el colegio ya hace hoy, y el calendario del próximo año es algo que define el equipo cuando se sienta a escribir el plan.</p>
+          <p>Si te sirve, las tres acciones que aparecen más arriba pueden entrar a ese calendario con una fecha, un lugar y un responsable para cada una.</p>
+        </div>
+      </div>
+
+      <div class="bloq"><h3>Tres pasos para usarlo en tu Plan de Gestión</h3>
+        <p class="lead">Son sugerencias de cómo aprovechar lo que acabas de responder. El plan lo escribe el establecimiento, con sus propios criterios.</p>
+        <div class="sp5">
+          <div class="it"><div class="n">1</div><div>
+            <div class="tt">Descarga este informe y guárdalo</div>
+            <div class="dd">Con el botón del final de la página queda en PDF, con la fecha y un número que lo identifica. Más abajo, en “Ver todas tus respuestas”, está la lista completa de lo que marcaste. Esa lista describe dónde está hoy el colegio, que es el punto de partida del que el plan tiene que salir. Si el próximo año vuelves a responder, puedes comparar.</div></div></div>
+          <div class="it"><div class="n">2</div><div>
+            <div class="tt">Pide a dos personas más del equipo que respondan</div>
+            <div class="dd">Desde otro cargo y desde otro ciclo. Son seis minutos a cada una. Con tres respuestas del mismo colegio aparecen las diferencias entre lo que ve cada uno, que suele ser la parte más útil.</div>
+            <div class="copiabox noimp"><button class="btn s" id="copiar" style="padding:9px 16px;font-size:.84rem">Copiar el enlace para tu equipo</button><span id="copiaOk" class="copiaok" hidden>Enlace copiado</span></div>
+            <div class="dd ligada" id="copiaTxt" hidden></div></div></div>
+          <div class="it"><div class="n">3</div><div>
+            <div class="tt">Lleva las tres acciones al calendario del plan</div>
+            <div class="dd">Si decides tomarlas, cada una necesita una fecha, un lugar y un responsable. Con eso queda cubierto el contenido que arriba aparece sin cubrir.</div></div></div>
+        </div>
+      </div>
+
+      <div class="bloq"><h3>Alcance de este informe</h3>
+        <p class="lead">Lo que este informe puede afirmar con la información que tiene, y lo que no.</p>
+        <div class="alcbox">
+          <div>Describe prácticas declaradas por una persona, desde un cargo y un ciclo. No evalúa ni certifica el cumplimiento de normativa educacional, que corresponde a la Superintendencia de Educación.</div>
+          <div>Las lecturas se apoyan únicamente en las respuestas indicadas en cada una. Donde la información no alcanza, el informe lo dice en vez de completar.</div>
+          <div>Una segunda respuesta desde otro cargo o desde otro ciclo del mismo establecimiento permite ver si la mirada es compartida, que es el contraste más útil que se puede hacer con este instrumento.</div>
+        </div>
+      </div>
+
+      <div class="bloq">
+        <details class="anexo"><summary>Ver todas tus respuestas</summary>
+          <table class="anx">${ITEMS.concat(Object.keys(st.o).length ? OPC : []).map(i => {
+            const v = (st.r[i.id] !== undefined) ? st.r[i.id] : st.o[i.id];
+            const et = esNum(v) ? NIV[v] : v === 'nose' ? 'No lo sé' : v === 'na' ? 'No aplica' : '—';
+            return `<tr><td>${esc(i.id)} · ${esc(i.t)}${st.dif[i.id]?' <span style="color:var(--tinta-tenue)">· distinto en otros ciclos</span>':''}</td><td class="n">${esc(et)}</td></tr>`;
+          }).join('')}</table>
+          <p style="font-size:.8rem;color:var(--tinta-tenue);margin-top:10px">Guarda esta tabla. En 2027 puedes volver a responder y comparar.</p>
+        </details>
+      </div>
+
+      <div class="bloq">
+        <h3>Quién hizo este instrumento</h3>
+        <p style="font-size:.9rem;line-height:1.5">Fundación Eventuras acompaña a colegios en formación docente y aprendizaje socioemocional.
+        Representante y socio implementador de Second Step en Chile. Programas alineados al marco CASEL.</p>
+        <p style="font-size:.9rem;line-height:1.5;margin-top:8px"><a href="${CONTACTO.sitio}" target="_blank" rel="noopener">eventuras.org</a> · ${esc(CONTACTO.correo)}</p>
+        <p class="refs">Referencias. Durlak, J. A., Weissberg, R. P., Dymnicki, A. B., Taylor, R. D. y Schellinger, K. B. (2011). The impact of enhancing students' social and emotional learning. Child Development, 82(1), 405-432. · Agencia de Calidad de la Educación, Indicadores de Desarrollo Personal y Social. · Ley 21.809, artículos 15 y 16 D, y artículos quinto y duodécimo transitorios.</p>
+      </div>
+
+      ${esEj ? `<div class="bloq" style="padding-bottom:4px"><p style="font-size:.84rem;color:var(--coral);font-weight:700">Informe de ejemplo, con respuestas inventadas para revisar el diseño.</p></div>` : ''}
+
+      <div class="folio">
+        <span>Folio ${esc(FOLIO)} · ${esc(hoy)} · Respondido desde ${esc(st.cargo||'')}${st.ciclo?' · '+esc(st.ciclo):''}</span>
+        <span>Fundación Eventuras</span>
+      </div>
+    </div>
+  </div>
+  <div id="estadoEnvio"></div>
+  <div class="acc noimp">
+    <button class="btn p" id="imp">Descargar o imprimir</button>
+    <button class="btn s" id="otra">Responder por otro ciclo</button>
+  </div>`;
+  const enlace = location.origin + location.pathname;
+  const bc = $('#copiar');
+  if (bc) bc.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(enlace);
+      $('#copiaOk').hidden = false;
+      setTimeout(() => { const e2 = $('#copiaOk'); if (e2) e2.hidden = true; }, 2600);
+    } catch(e) {
+      const t = $('#copiaTxt');
+      t.textContent = enlace; t.hidden = false;
+      const rg = document.createRange(); rg.selectNodeContents(t);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(rg);
+    }
+  };
+  $('#imp').onclick = () => { const d = app.querySelector('details.anexo'); if (d) d.open = true; window.print(); };
+  $('#otra').onclick = () => { st.r = {}; st.o = {}; st.dif = {}; st.verOpc = false; ir('quien'); };
+}
+
+/* Informe de ejemplo para revisar el diseño antes de producción: abrir la página con #ejemplo */
+function ejemplo(){
+  st.col = {rbd:'7743', nombre:'Colegio Bicentenario Felmer Niklitschek', comuna:'Puerto Varas',
+            region:'Los Lagos', dep:'Particular subvencionado', mat:612};
+  st.cargo = 'Coordinación o encargatura de convivencia';
+  st.ciclo = 'Educación básica';
+  st.r = {'1.1':1,'1.2':1,'1.3':0,'2.1':2,'2.2':0,'2.3':1,'2.4':0,
+          '3.1':1,'3.2':1,'3.3':0,'4.1':2,'4.2':1,'4.3':'nose','5.1':2,'5.2':0,'5.3':1};
+  st.dif = {'1.1':true,'2.3':true,'5.1':true};
+  st.o = {'O.1':1,'O.2':0,'O.3':1};
+  st.lead = {nombre:'Ejemplo', correo:'contacto@eventuras.org', tel:'', mkt:false};
+  st.fase = 'informe';
+}
+if (location.hash === '#ejemplo') ejemplo();
+window.addEventListener('hashchange', () => {
+  if (location.hash === '#ejemplo') { ejemplo(); render(); window.scrollTo(0,0); }
+});
+
+render();
+</script>
+</body>
+</html>
