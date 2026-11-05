@@ -121,50 +121,165 @@ function guardarFila(d) {
 function enviarCorreo(d) {
   const c = d.colegio || {};
   const asunto = 'Tu autodiagnóstico de convivencia · ' + (c.nombre || 'tu establecimiento');
-  const html = cuerpoCorreo(d);
+  const radar = imagenRadar(d.radarPng);
   const opciones = {
     name: CONFIG.REMITENTE,
-    htmlBody: html,
+    htmlBody: cuerpoCorreo(d, !!radar),
     replyTo: Session.getEffectiveUser().getEmail()
   };
+  if (radar) opciones.inlineImages = { radar: radar };
   if (CONFIG.COPIA_INTERNA) opciones.bcc = CONFIG.COPIA_INTERNA;
   MailApp.sendEmail(d.contacto.correo, asunto, textoPlano(d), opciones);
 }
 
-function cuerpoCorreo(d) {
-  const c = d.colegio || {};
-  const est = function(k) { return d.bandas && d.bandas[k] ? d.bandas[k] : null; };
+/* El gráfico llega desde la página como PNG en base64. Solo se acepta si de verdad
+   es un PNG y pesa menos de 400 KB; si no, el correo sale igual, sin gráfico. */
+function imagenRadar(b64) {
+  try {
+    if (!b64 || typeof b64 !== 'string' || b64.length > 550000) return null;
+    const bytes = Utilities.base64Decode(b64);
+    const firma = [137, 80, 78, 71];
+    for (let i = 0; i < 4; i++) if ((bytes[i] & 255) !== firma[i]) return null;
+    return Utilities.newBlob(bytes, 'image/png', 'perfil.png');
+  } catch (e) { return null; }
+}
 
+/* Colores de las etiquetas de estado, iguales a los de la página. */
+const PILDORA = {
+  b3: ['#F3F9E4', VERDE_HONDO, VERDE],
+  b2: ['#FFF7E3', '#8A6A12', '#E8C76A'],
+  b1: ['#FDEEEE', '#E25D5D', '#E25D5D'],
+  b0: [FONDO, '#9B9B9B', LINEA]
+};
+
+function titulo(t, arriba) {
+  return '<div style="font-size:11px;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;color:' + VERDE_HONDO +
+    ';margin:' + (arriba === false ? '0' : '28px') + ' 0 10px 0;padding-top:' + (arriba === false ? '0' : '22px') +
+    ';border-top:' + (arriba === false ? '0' : '1px solid ' + LINEA) + '">' + esc(t) + '</div>';
+}
+
+function parrafo(t, extra) {
+  return '<p style="margin:0 0 12px 0;font-size:13px;line-height:1.55;color:' + TINTA_MEDIA + (extra || '') + '">' + t + '</p>';
+}
+
+function cuerpoCorreo(d, conRadar) {
+  const c = d.colegio || {};
+  let h = '';
+
+  /* ---- tu perfil ---- */
+  h += titulo('Tu perfil', false);
+  h += parrafo('Las dieciséis preguntas que respondiste se agrupan en cinco dimensiones. El estado de cada una resume en qué momento están sus prácticas, según lo que marcaste.');
+  if (conRadar) {
+    h += '<div style="text-align:center;margin:6px 0 10px 0"><img src="cid:radar" width="340" height="268" alt="Perfil de las cinco dimensiones" style="display:inline-block;max-width:100%;height:auto;border:0"></div>';
+  }
   let bandas = '';
   DIMS_ORDEN.forEach(function(k) {
-    const b = est(k); if (!b) return;
+    const b = d.bandas && d.bandas[k]; if (!b) return;
+    const p = PILDORA[b.clase] || PILDORA.b0;
     bandas += '<tr>' +
-      '<td style="padding:9px 0;border-bottom:1px solid ' + LINEA + ';font-size:14px;color:' + TINTA + '">' + esc(b.nombre) + '</td>' +
-      '<td style="padding:9px 0;border-bottom:1px solid ' + LINEA + ';font-size:13px;font-weight:bold;color:' + VERDE_HONDO + ';text-align:right;white-space:nowrap">' + esc(b.estado) + '</td>' +
-      '</tr>';
-  });
-
-  let acciones = '';
-  (d.acciones || []).forEach(function(a, i) {
-    acciones += '<tr><td style="padding:0 0 16px 0">' +
-      '<div style="font-size:15px;font-weight:bold;color:' + TINTA + '">' + (i + 1) + '. ' + esc(a.titulo) + '</div>' +
-      '<div style="font-size:14px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:4px">' + esc(a.detalle) + '</div>' +
-      '<div style="font-size:12px;font-weight:bold;color:' + VERDE_HONDO + ';margin-top:6px">' + esc(a.ventana) + '</div>' +
+      '<td style="padding:9px 0;border-bottom:1px solid ' + LINEA + ';font-size:14px;font-weight:bold;color:' + TINTA + '">' + esc(b.nombre) + '</td>' +
+      '<td style="padding:9px 0;border-bottom:1px solid ' + LINEA + ';text-align:right;white-space:nowrap">' +
+        '<span style="display:inline-block;font-size:11px;font-weight:bold;padding:2px 9px;border-radius:99px;background:' + p[0] + ';color:' + p[1] + ';border:1px solid ' + p[2] + '">' + esc(b.estado) + '</span>' +
       '</td></tr>';
   });
+  h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + bandas + '</table>';
+  h += '<div style="font-size:11px;line-height:1.5;color:' + TINTA_MEDIA + ';margin-top:12px">' +
+    '<b style="color:' + TINTA + '">Prácticas aisladas</b> · ocurren por iniciativa de alguien, sin un formato definido que se repita.<br>' +
+    '<b style="color:' + TINTA + '">En instalación</b> · hay formato definido y todavía no se aplica de manera pareja.<br>' +
+    '<b style="color:' + TINTA + '">Prácticas instaladas</b> · se aplican de forma regular y sobreviven a los cambios de persona.<br>' +
+    '<b style="color:' + TINTA + '">Avance desigual</b> · dentro de la misma dimensión conviven prácticas muy instaladas con otras que no han partido.</div>';
 
-  let lect = '';
-  (d.lecturas || []).forEach(function(t) {
-    lect += '<div style="font-size:14px;color:' + TINTA + ';padding:7px 0;border-bottom:1px solid ' + LINEA + '">' + esc(t) + '</div>';
-  });
+  /* ---- lecturas cruzadas ---- */
+  const L = d.lecturasDetalle || (d.lecturas || []).map(function(t) { return {titulo: t}; });
+  h += titulo('Qué se lee al cruzar tus respuestas');
+  if (L.length) {
+    L.forEach(function(x) {
+      h += '<div style="background:' + FONDO + ';border:1px solid ' + LINEA + ';border-radius:12px;padding:14px 16px;margin-bottom:12px">' +
+        '<div style="font-size:15px;font-weight:bold;color:' + TINTA + ';line-height:1.3">' + esc(x.titulo) + '</div>' +
+        (x.apoyo && x.apoyo.length ? '<div style="font-size:11px;color:' + TINTA_MEDIA + ';margin-top:6px">Se apoya en: ' + esc(x.apoyo.join(' · ')) + '</div>' : '') +
+        (x.lectura ? '<div style="font-size:14px;color:' + TINTA + ';line-height:1.5;margin-top:8px">' + esc(x.lectura) + '</div>' : '') +
+        (x.implicancia ? '<div style="font-size:13px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid ' + LINEA + '">' + esc(x.implicancia) + '</div>' : '') +
+        '</div>';
+    });
+  } else {
+    h += parrafo('Tus respuestas no muestran por ahora ninguno de los cruces que este instrumento está construido para detectar. El perfil de arriba y la ruta de abajo son la lectura que corresponde hacer con esta información.');
+  }
 
-  const foco = d.foco ? (
-    '<div style="background:#F3F9E4;border:1px solid ' + VERDE + ';border-radius:12px;padding:16px;margin:0 0 24px 0">' +
-    '<div style="font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:' + VERDE_HONDO + '">Por dónde conviene partir</div>' +
-    '<div style="font-size:16px;font-weight:bold;color:' + TINTA + ';margin-top:5px">' + esc(d.foco.titulo) + '</div>' +
-    '<div style="font-size:14px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:8px"><b style="color:' + TINTA + '">Lo que marcaste:</b> ' + esc(d.foco.hoy) + '</div>' +
-    (d.foco.siguiente ? '<div style="font-size:14px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:7px"><b style="color:' + TINTA + '">El paso siguiente:</b> ' + esc(d.foco.siguiente) + '</div>' : '') +
-    '</div>') : '';
+  /* ---- foco ---- */
+  if (d.foco) {
+    h += titulo('Por dónde conviene partir');
+    h += '<div style="background:#F3F9E4;border:1px solid ' + VERDE + ';border-radius:12px;padding:16px">' +
+      (d.foco.tramo ? '<div style="font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:' + VERDE_HONDO + '">' + esc(d.foco.tramo) + '</div>' : '') +
+      '<div style="font-size:16px;font-weight:bold;color:' + TINTA + ';margin-top:5px;line-height:1.3">' + esc(d.foco.titulo) + '</div>' +
+      '<div style="font-size:14px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:8px"><b style="color:' + TINTA + '">Lo que declaraste:</b> ' + esc(d.foco.hoy) + '</div>' +
+      (d.foco.siguiente ? '<div style="font-size:14px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid ' + VERDE + '"><b style="color:' + TINTA + '">El paso siguiente:</b> ' + esc(d.foco.siguiente) + '</div>' : '') +
+      (d.foco.porque ? '<div style="font-size:13px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid ' + VERDE + '"><b style="color:' + TINTA + '">Por qué este tramo va primero.</b> ' + esc(d.foco.porque) + '</div>' : '') +
+      '</div>';
+  }
+
+  /* ---- tres acciones ---- */
+  if ((d.acciones || []).length) {
+    h += titulo('Tres acciones, en este orden');
+    let a = '';
+    d.acciones.forEach(function(x, i) {
+      a += '<tr><td valign="top" style="padding:0 12px 16px 0;width:26px">' +
+          '<div style="width:24px;height:24px;line-height:24px;border-radius:99px;background:#E25D5D;color:#fff;font-size:12px;font-weight:bold;text-align:center">' + (i + 1) + '</div></td>' +
+        '<td valign="top" style="padding:0 0 16px 0">' +
+          '<div style="font-size:15px;font-weight:bold;color:' + TINTA + ';line-height:1.3">' + esc(x.titulo) + '</div>' +
+          '<div style="font-size:14px;color:' + TINTA_MEDIA + ';line-height:1.5;margin-top:3px">' + esc(x.detalle) + '</div>' +
+          '<span style="display:inline-block;margin-top:6px;font-size:11px;font-weight:bold;color:' + VERDE_HONDO + ';background:#F3F9E4;border:1px solid ' + VERDE + ';padding:2px 9px;border-radius:99px">' + esc(x.ventana) + '</span>' +
+        '</td></tr>';
+    });
+    h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + a + '</table>';
+    h += parrafo('La ventana sugerida indica cuándo cuesta menos instalar cada acción, considerando la jornada de planificación docente de comienzos de marzo y el cierre de la Fase Estratégica del PME el 20 de marzo.', ';font-size:12px;color:#9B9B9B');
+  }
+
+  /* ---- lo instalado ---- */
+  if ((d.instalado || []).length) {
+    h += titulo('Lo que ya tienes instalado');
+    d.instalado.forEach(function(x) {
+      h += '<div style="font-size:14px;color:' + TINTA + ';padding:4px 0"><span style="color:' + VERDE + ';font-weight:bold">●</span>&nbsp; ' + esc(x.titulo) + '</div>';
+    });
+  }
+
+  /* ---- plan de gestión ---- */
+  if ((d.plan || []).length) {
+    h += titulo('Dónde entra cada parte en tu Plan de Gestión');
+    let p = '';
+    d.plan.forEach(function(x) {
+      p += '<tr><td style="padding:8px 0;border-bottom:1px solid ' + LINEA + ';font-size:13px;color:' + TINTA + '">' + esc(x.letra) + ') ' + esc(x.contenido) + '</td>' +
+        '<td style="padding:8px 0 8px 12px;border-bottom:1px solid ' + LINEA + ';font-size:13px;font-weight:bold;text-align:right;white-space:nowrap;color:' + (x.preguntas ? VERDE_HONDO : '#E25D5D') + '">' +
+        esc(x.preguntas || 'sin cubrir') + '</td></tr>';
+    });
+    h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + p + '</table>';
+    h += parrafo('Contenidos mínimos del artículo 16 D de la Ley 21.809, con el número de la pregunta que los toca. Este informe describe prácticas declaradas por quien respondió. No evalúa ni certifica el cumplimiento de normativa educacional.', ';font-size:12px;color:#9B9B9B;margin-top:10px');
+  }
+
+  /* ---- todas las respuestas ---- */
+  if ((d.detalle || []).length) {
+    h += titulo('Todas tus respuestas');
+    let r = '';
+    d.detalle.forEach(function(x) {
+      r += '<tr><td style="padding:6px 0;border-bottom:1px solid ' + LINEA + ';font-size:12px;color:' + TINTA + '">' + esc(x.id) + ' · ' + esc(x.pregunta) +
+          (x.distinto ? ' <span style="color:#9B9B9B">· distinto en otros ciclos</span>' : '') + '</td>' +
+        '<td style="padding:6px 0 6px 12px;border-bottom:1px solid ' + LINEA + ';font-size:12px;font-weight:bold;text-align:right;white-space:nowrap;color:' + TINTA + '">' + esc(x.respuesta) + '</td></tr>';
+    });
+    h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + r + '</table>';
+    h += parrafo('Guarda este correo. En 2027 puedes volver a responder y comparar.', ';font-size:12px;color:#9B9B9B;margin-top:10px');
+  }
+
+  /* ---- quién hizo ---- */
+  h += titulo('Quién hizo este instrumento');
+  h += '<p style="margin:0;font-size:14px;line-height:1.5;color:' + TINTA + '">Fundación Eventuras acompaña a colegios en formación docente y aprendizaje socioemocional. Representante y socio implementador de Second Step en Chile. Programas alineados al marco CASEL.</p>';
+  h += '<p style="margin:8px 0 0 0;font-size:14px"><a href="https://www.eventuras.org" style="color:' + VERDE_HONDO + '">eventuras.org</a> · contacto@eventuras.org</p>';
+
+  h += '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 6px 0"><tr><td style="background:' + VERDE + ';border-radius:99px">' +
+    '<a href="' + CONFIG.SITIO + '" style="display:inline-block;padding:13px 24px;font-size:14px;font-weight:bold;color:#1F2A08;text-decoration:none">Invitar a otra persona del equipo</a>' +
+    '</td></tr></table>';
+  h += parrafo('Con dos respuestas más del mismo colegio, desde otro cargo o sobre otra parte del establecimiento, aparecen las diferencias entre lo que ve cada uno. Son seis minutos a cada una.', ';font-size:12px');
+
+  const lugar = [c.comuna, c.region, c.rbd ? 'RBD ' + c.rbd : null].filter(Boolean).join(' · ');
+  const quien = [d.cargo, d.ciclo ? 'Alcance: ' + d.ciclo : null].filter(Boolean).join(' · ');
 
   return '' +
   '<div style="margin:0;padding:0;background:' + FONDO + ';font-family:Nunito,Segoe UI,Helvetica,Arial,sans-serif">' +
@@ -175,27 +290,13 @@ function cuerpoCorreo(d) {
   '<tr><td style="background:' + VERDE + ';padding:20px 24px">' +
     '<div style="font-size:11px;font-weight:bold;letter-spacing:1.4px;text-transform:uppercase;color:#1F2A08;opacity:.75">Autodiagnóstico de convivencia</div>' +
     '<div style="font-size:21px;font-weight:bold;color:#1F2A08;margin-top:3px;line-height:1.2">' + esc(c.nombre || 'Tu establecimiento') + '</div>' +
-    (c.comuna ? '<div style="font-size:13px;font-weight:bold;color:#1F2A08;opacity:.85;margin-top:5px">' + esc([c.comuna, c.region].filter(Boolean).join(' · ')) + '</div>' : '') +
+    (lugar ? '<div style="font-size:13px;font-weight:bold;color:#1F2A08;opacity:.85;margin-top:5px">' + esc(lugar) + '</div>' : '') +
   '</td></tr>' +
 
   '<tr><td style="padding:24px">' +
-    '<p style="margin:0 0 20px 0;font-size:15px;line-height:1.55;color:' + TINTA + '">Hola ' + esc((d.contacto.nombre || '').split(' ')[0]) + ', acá va el resumen de lo que respondiste. El informe completo, con las lecturas cruzadas y la sección del Plan de Gestión, está en la página.</p>' +
-
-    '<div style="font-size:11px;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;color:' + VERDE_HONDO + ';margin-bottom:10px">Tu perfil</div>' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px">' + bandas + '</table>' +
-
-    foco +
-
-    (acciones ? '<div style="font-size:11px;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;color:' + VERDE_HONDO + ';margin-bottom:12px">Tres acciones, en este orden</div>' +
-      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:8px">' + acciones + '</table>' : '') +
-
-    (lect ? '<div style="font-size:11px;font-weight:bold;letter-spacing:1.2px;text-transform:uppercase;color:' + VERDE_HONDO + ';margin:16px 0 8px 0">Qué se lee al cruzar tus respuestas</div>' + lect : '') +
-
-    '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:26px 0 8px 0"><tr><td style="background:' + VERDE + ';border-radius:99px">' +
-      '<a href="' + CONFIG.SITIO + '" style="display:inline-block;padding:13px 24px;font-size:14px;font-weight:bold;color:#1F2A08;text-decoration:none">Volver al informe completo</a>' +
-    '</td></tr></table>' +
-
-    '<p style="margin:20px 0 0 0;font-size:13px;line-height:1.55;color:' + TINTA_MEDIA + '">Si quieres ver las diferencias entre lo que ve cada parte del equipo, pídele a dos personas más que respondan desde otro cargo y otro ciclo. Son seis minutos a cada una.</p>' +
+    '<p style="margin:0 0 22px 0;font-size:15px;line-height:1.55;color:' + TINTA + '">Hola ' + esc((d.contacto.nombre || '').split(' ')[0]) +
+      ', este es tu informe completo. Guarda este correo: es tu copia del autodiagnóstico.</p>' +
+    h +
   '</td></tr>' +
 
   '<tr><td style="padding:16px 24px 22px 24px;border-top:1px solid ' + LINEA + '">' +
@@ -204,7 +305,8 @@ function cuerpoCorreo(d) {
       'Las guardamos por ' + CONFIG.RETENCION_MESES + ' meses y después quedan sin identificación del establecimiento. ' +
       'Para pedir que las borremos antes, responde este correo.' +
     '</p>' +
-    '<p style="margin:10px 0 0 0;font-size:11px;color:#9B9B9B">Folio ' + esc(d.folio || '') + ' · Corporación Educacional Eduventuras · contacto@eventuras.org</p>' +
+    '<p style="margin:10px 0 0 0;font-size:11px;color:#9B9B9B">Folio ' + esc(d.folio || '') + (quien ? ' · ' + esc(quien) : '') +
+      ' · Corporación Educacional Eduventuras · contacto@eventuras.org</p>' +
   '</td></tr>' +
 
   '</table></td></tr></table></div>';
@@ -218,7 +320,7 @@ function textoPlano(d) {
   });
   if (d.foco) t += '\nPor dónde conviene partir: ' + d.foco.titulo + '\n';
   (d.acciones || []).forEach(function(a, i) { t += '\n' + (i + 1) + '. ' + a.titulo + ' (' + a.ventana + ')\n' + a.detalle + '\n'; });
-  t += '\nInforme completo: ' + CONFIG.SITIO + '\n';
+  t += '\nAutodiagnóstico: ' + CONFIG.SITIO + '\n';
   return t;
 }
 
