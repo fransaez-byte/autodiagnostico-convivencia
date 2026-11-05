@@ -231,7 +231,7 @@ function cuerpoCorreo(d, conRadar) {
         '</td></tr>';
     });
     h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + a + '</table>';
-    h += parrafo('La ventana sugerida indica cuándo cuesta menos instalar cada acción, considerando la jornada de planificación docente de comienzos de marzo y el cierre de la Fase Estratégica del PME el 20 de marzo.', ';font-size:12px;color:#9B9B9B');
+    h += parrafo('El período sugerido indica cuándo cuesta menos instalar cada acción, considerando la jornada de planificación docente de comienzos de marzo y el cierre de la Fase Estratégica del PME el 20 de marzo.', ';font-size:12px;color:#9B9B9B');
   }
 
   /* ---- lo instalado ---- */
@@ -365,7 +365,7 @@ function prueba() {
   enviarCorreo({
     folio: 'AD-PRUEBA', fecha: new Date().toISOString(),
     colegio: {nombre: 'Colegio de prueba', comuna: 'Puerto Varas', region: 'Los Lagos', rbd: '7743'},
-    cargo: 'Director o directora', ciclo: 'Educación básica',
+    cargo: 'Director o directora', ciclo: 'Solo educación básica',
     bandas: {sala:{nombre:'Lo que pasa en la sala',estado:'Prácticas aisladas'},
              adultos:{nombre:'Capacidad de los adultos',estado:'En instalación'},
              cultura:{nombre:'Cultura y espacios compartidos',estado:'Prácticas aisladas'},

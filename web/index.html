@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <title>Autodiagnóstico de convivencia · Eventuras</title>
-<meta name="description" content="Dieciséis preguntas sobre las prácticas instaladas en tu colegio. Recibes un informe con tres movimientos concretos para 2027.">
+<meta name="description" content="Dieciséis preguntas sobre las prácticas instaladas en tu colegio. Recibes un informe con tres acciones concretas para 2027.">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Autodiagnóstico de convivencia · Eventuras">
-<meta property="og:description" content="Dieciséis preguntas, seis minutos, y un informe con tres movimientos concretos para 2027.">
+<meta property="og:description" content="Dieciséis preguntas, seis minutos, y un informe con tres acciones concretas para 2027.">
 <meta property="og:type" content="website">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -258,16 +258,16 @@ const DIMS = [
  { id:'sala', nombre:'Lo que pasa en la sala', corto:'La sala', items:[
    { id:'1.1', c1:true, t:'Regularidad y secuencia del trabajo socioemocional', n:[
      'Ocurre en actividades aisladas, como talleres puntuales, jornadas de convivencia o actividades de efemérides. No hay un espacio regular en el horario.',
-     'Hay un espacio asignado, de frecuencia mensual o menor, o bien semanal pero suspendido seguido por actos, ensayos, evaluaciones o reuniones.',
+     'Hay un espacio asignado, de frecuencia mensual o menor, o bien semanal, pero que se suspende con frecuencia por actos, ensayos, evaluaciones o reuniones.',
      'Hay un espacio semanal en el horario de los cursos, con contenidos definidos y ordenados para el año, que se realiza la mayoría de las semanas.',
      'Las sesiones están calendarizadas y hay progresión escrita entre niveles, de modo que cada curso supone las habilidades del anterior.'],
      mov:['Fijar el bloque semanal y protegerlo','Dejar el bloque en el horario de todos los cursos antes de que parta el año, con las sesiones del primer semestre ya calendarizadas, y nombrar quién revisa que se haya hecho.','Antes de que parta el año'] },
    { id:'1.2', t:'Rutinas comunes de manejo de aula', n:[
      'Cada profesor aplica lo que ha aprendido por su cuenta. Un estudiante que cambia de sala encuentra reglas distintas en cada una.',
      'Hay acuerdos escritos sobre el manejo de la sala, y su aplicación queda a criterio de cada profesor sin que nadie revise la diferencia.',
-     'Hay rutinas comunes para el inicio de la clase, las transiciones, pedir la palabra y responder a una interrupción, y la mayoría las aplica igual.',
+     'Hay rutinas comunes para el inicio de la clase, las transiciones, pedir la palabra y responder a una interrupción, y la mayoría las aplica de la misma forma.',
      'Las rutinas están escritas, se aplican en todas las salas y un profesor que llega a mitad de año las adquiere en sus primeras semanas.'],
-     mov:['Acordar tres rutinas y escribirlas','Elegir tres momentos de la clase, acordar una sola forma de resolverlos y dejarla por escrito en una plana que se entrega a todo el que llega.','Antes de que parta el año'] },
+     mov:['Acordar tres rutinas y escribirlas','Elegir tres momentos de la clase, acordar una sola forma de resolverlos y dejarla por escrito en un documento breve que se entrega a cada profesor que se incorpora.','Antes de que parta el año'] },
    { id:'1.3', t:'Respuesta ante la desregulación conductual en la sala', alc:'Interrupción sostenida que impide la continuidad de la clase.', n:[
      'El estudiante es retirado de la sala y el caso se deriva a convivencia o a inspectoría.',
      'Hay un procedimiento de derivación y se activa cuando el profesor ya agotó sus recursos.',
@@ -293,7 +293,7 @@ const DIMS = [
      'Hay orientaciones para el trabajo con el curso y el resto queda a criterio de cada profesor jefe.',
      'Quienes tienen jefatura reciben formación específica para el rol y cuentan con horas asignadas a él.',
      'Hay además una instancia periódica entre ellos para revisar casos y acordar respuestas comunes.'],
-     mov:['Dar horas y una instancia a los profesores jefe','Asignar horas a la jefatura y abrir una reunión mensual entre profesores jefe para revisar casos y acordar respuestas comunes.','Antes de que parta el año'] },
+     mov:['Dar horas y una instancia a los profesores jefes','Asignar horas a la jefatura de curso y abrir una reunión mensual entre profesores jefes para revisar casos y acordar respuestas comunes.','Antes de que parta el año'] },
    { id:'2.4', t:'Bienestar y carga del equipo adulto', n:[
      'No hay acciones dirigidas al bienestar del equipo. El tema aparece cuando alguien se enferma o renuncia.',
      'Hay acciones puntuales, como una actividad al año, sin continuidad.',
@@ -319,7 +319,7 @@ const DIMS = [
      'Hay turnos asignados, sin criterios comunes de actuación ni instancia para revisar lo que ocurre.',
      'Hay criterios comunes de actuación, y los asistentes de la educación e inspectores participan de la misma formación que los docentes.',
      'Hay además una instancia regular de coordinación entre quienes sostienen esos espacios y el resto del equipo.'],
-     mov:['Incluir a quienes sostienen el patio','Sumar a asistentes de la educación e inspectores a la misma formación que los docentes y abrir una instancia de coordinación con ellos.','Antes de que parta el año'] }
+     mov:['Incluir a quienes están a cargo del patio','Sumar a asistentes de la educación e inspectores a la misma formación que los docentes y abrir una instancia de coordinación con ellos.','Antes de que parta el año'] }
  ]},
  { id:'liderazgo', nombre:'Liderazgo y gestión', corto:'Liderazgo', items:[
    { id:'4.1', t:'Dónde se resuelven las decisiones de convivencia', alc:'Las que comprometen horas, horario, presupuesto, dotación o foco de la formación.', n:[
@@ -335,7 +335,7 @@ const DIMS = [
      'Ese tiempo se mantiene cuando el calendario se congestiona, en lugar de ser lo primero que se suspende.'],
      mov:['Proteger el tiempo del equipo por escrito','Dejar definido qué parte del consejo o de la reunión de nivel se destina a este trabajo, y acordar que no se usa para otra cosa.','Antes de que parta el año'] },
    { id:'4.3', t:'Articulación con el trabajo pedagógico', n:[
-     'El trabajo de convivencia corre por un carril separado del pedagógico. No hay instancias donde se crucen.',
+     'El trabajo de convivencia se desarrolla por separado del trabajo pedagógico. No hay instancias donde se crucen.',
      'Hay coordinación cuando surge un caso, no de forma planificada.',
      'Convivencia y el área técnico-pedagógica tienen instancias regulares de trabajo conjunto, con acuerdos registrados.',
      'Las definiciones de convivencia y las pedagógicas se planifican juntas y quedan escritas en el mismo plan anual.'],
@@ -381,7 +381,7 @@ const OPC = [
     'Hay materiales y registros archivados, y el criterio para aplicarlos no está documentado.',
     'Los procedimientos están escritos con detalle suficiente para que otro profesional los retome, e identifican responsables alternativos.',
     'La conducción está distribuida en varias personas y hay inducción definida para el rol.'],
-    mov:['Escribir los procedimientos para que otro los retome','Dejar por escrito el paso a paso de lo que hoy vive en la cabeza de una persona, con responsables alternativos nombrados.','Segundo semestre'] }
+    mov:['Escribir los procedimientos para que otro los retome','Dejar por escrito el paso a paso de lo que hoy depende del conocimiento de una sola persona, con responsables alternativos nombrados.','Segundo semestre'] }
 ];
 
 /* ===================== el criterio de la ruta =====================
@@ -394,7 +394,7 @@ const OPC = [
    se asocia con mejores resultados que una serie de actividades sueltas. */
 const TRAMOS = [
   { n:'Condiciones que sostienen cualquier cambio', items:['4.2','4.1'],
-    por:'Sin tiempo protegido ni una instancia donde se decida, lo que se instale este año se cae cuando el calendario se aprieta. Por eso va primero, aunque no se vea en la sala.' },
+    por:'Sin tiempo protegido ni una instancia donde se decida, lo que se instale este año se interrumpe cuando el calendario se sobrecarga. Por eso va primero, aunque no se vea en la sala.' },
   { n:'Práctica regular en la sala', items:['1.1','1.2'],
     por:'Una secuencia regular se asocia con mejores resultados que una serie de actividades sueltas, y es lo que ocurre en la sala lo que los estudiantes viven.' },
   { n:'Capacidad que sostiene esa práctica', items:['2.2','2.1','2.3'],
@@ -421,8 +421,8 @@ const MAPA_16D = [
   ['g','Formación para padres, madres y apoderados','5.1',1]
 ];
 
-const CARGOS = ['Director o directora','Sostenedor o representante legal','Jefatura técnico-pedagógica (UTP)',
-  'Coordinación o encargatura de convivencia','Inspectoría general','Jefatura de ciclo','Docente','Otro'];
+const CARGOS = ['Director o directora','Sostenedor o representante legal','Jefe o jefa de UTP',
+  'Encargado o encargada de convivencia escolar','Inspector o inspectora general','Coordinador o coordinadora de ciclo','Docente','Otro'];
 const CICLOS = ['El establecimiento completo','Solo educación parvularia','Solo educación básica','Solo educación media'];
 const TODO_EL_COLEGIO = CICLOS[0];
 
@@ -590,7 +590,7 @@ function vPortada(){
     <div class="lista">
       <div class="li"><span class="pt"></span><span>Cada pregunta describe cuatro situaciones. Eliges la que se parece a la de tu colegio hoy.</span></div>
       <div class="li"><span class="pt"></span><span>Las preguntas describen prácticas observables, de modo que responderlas es constatar un hecho.</span></div>
-      <div class="li"><span class="pt"></span><span>Cada respuesta queda mapeada al contenido del Plan de Gestión de Convivencia que le corresponde.</span></div>
+      <div class="li"><span class="pt"></span><span>Cada respuesta se vincula con el contenido del Plan de Gestión de Convivencia que le corresponde.</span></div>
     </div>
   </div>
   <div style="margin-top:14px">${AVISO_CONF}</div>
@@ -666,7 +666,7 @@ function pintarSel(){
 function vQuien(){
   app.innerHTML = `
   <section class="step">
-    <p class="q">¿Desde qué rol respondes?</p>
+    <p class="q">¿Qué cargo tienes en el establecimiento?</p>
     <p class="hint">Queda escrito en el informe, porque lo que se ve desde cada cargo es distinto.</p>
     <div class="opts" id="cg">${CARGOS.map(c => `<button class="opt${st.cargo===c?' sel':''}" data-v="${esc(c)}"><span class="t">${esc(c)}</span></button>`).join('')}</div>
     <p class="q" style="margin-top:26px">¿Sobre qué parte del colegio vas a responder?</p>
@@ -736,7 +736,7 @@ function vEspejo(){
     <p class="hint">Cinco preguntas no alcanzan para ubicar a un colegio en un nivel, así que no lo hacemos. Lo que sí podemos hacer es devolvértelo ordenado.</p>
     <div class="card" style="padding:4px 18px 10px">${lns}</div>
     <div class="card" style="margin-top:16px;padding:18px 20px">
-      <p style="font-weight:800;font-size:1.02rem;line-height:1.3">Las once preguntas que faltan son las que permiten armar el informe</p>
+      <p style="font-weight:800;font-size:1.02rem;line-height:1.3">Las once preguntas que faltan son las que permiten elaborar el informe</p>
       <p style="font-size:.9rem;color:var(--tinta-media);margin-top:7px;line-height:1.5">Con las dieciséis se puede ver el perfil completo de tu establecimiento, cuál es la estrategia que más te conviene trabajar primero y en qué mes conviene hacerlo.</p>
     </div>
     <div class="acc"><button class="btn p" id="sig">Seguir, faltan cuatro minutos</button>
@@ -751,13 +751,13 @@ function vOpcional(){
     app.innerHTML = `
     <section class="step">
       <div class="dimtag">Opcional</div>
-      <p class="q">¿Estás armando el Plan de Gestión 2027?</p>
-      <p class="hint">Hay tres preguntas más que el plan te va a pedir igual. Si las respondes, esa parte del informe llega en formato de insumo para el plan.</p>
+      <p class="q">¿Estás elaborando el Plan de Gestión 2027?</p>
+      <p class="hint">Hay tres preguntas más sobre temas que el plan de todas formas va a requerir. Si las respondes, esa parte del informe llega en formato de insumo para el plan.</p>
       <div class="card" style="padding:16px 18px"><div class="lista">
         ${OPC.map(o => `<div class="li"><span class="pt"></span><span>${esc(o.t)}</span></div>`).join('')}
       </div></div>
       <div class="acc"><button class="btn p" id="si">Sí, son tres más</button>
-        <button class="btn s" id="no">Saltar e ir al informe</button></div>
+        <button class="btn s" id="no">Omitir e ir al informe</button></div>
     </section>`;
     $('#si').onclick = () => { st.verOpc = true; st.idx = 0; render(); window.scrollTo(0,0); };
     $('#no').onclick = () => ir('lead');
@@ -784,7 +784,7 @@ function vLead(){
   app.innerHTML = `
   <section class="step">
     <div class="dimtag">Último paso</div>
-    <p class="q">¿A qué correo te mandamos el informe?</p>
+    <p class="q">¿A qué correo te enviamos el informe?</p>
     <p class="hint">El informe aparece en pantalla apenas lo pidas, y te llega una copia para guardarla y compartirla con tu equipo.</p>
     <div style="margin-bottom:16px">${AVISO_CONF}</div>
     <form class="env" id="f">
@@ -856,7 +856,7 @@ async function enviar(){
   if (!ENDPOINT) { if (est) est.innerHTML = `<div class="estado ok">Informe generado. El envío por correo se activa al conectar el backend.</div>`; return; }
   try {
     await fetch(ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(cuerpo)});
-    if (est) est.innerHTML = `<div class="estado ok">Te mandamos una copia a ${esc(st.lead.correo)}.</div>`;
+    if (est) est.innerHTML = `<div class="estado ok">Te enviamos una copia a ${esc(st.lead.correo)}.</div>`;
   } catch(e) {
     if (est) est.innerHTML = `<div class="estado err">No pudimos enviar la copia por correo. El informe de abajo es el mismo, puedes imprimirlo o guardarlo como PDF.</div>`;
   }
@@ -881,7 +881,7 @@ function lecturas(){
     L.push({ t:'Lo que funciona hoy depende de las personas',
       r:['1.1 y 1.2, sobre la práctica de aula', '4.2, sobre el tiempo asignado al equipo'],
       l:'Hay práctica de aula declarada y todavía sin tiempo protegido ni presupuesto asociados.',
-      i:'Una práctica sostenida por voluntad personal se interrumpe con el próximo cambio de equipo o con el próximo calendario apretado.' });
+      i:'Una práctica sostenida por voluntad personal se interrumpe con el próximo cambio de equipo o con el próximo período de mayor carga.' });
 
   if (n('2.1') && n('2.2') && v('2.1') >= 2 && v('2.2') <= 1)
     L.push({ t:'Hay formación y todavía no hay acompañamiento después',
@@ -906,7 +906,7 @@ function lecturas(){
     L.push({ t:'Lo instalado vive en un ciclo y todavía no cruza al resto',
       r:[nc+' prácticas marcadas como distintas en otros ciclos'],
       l:'El establecimiento tiene prácticas que funcionan y que están concentradas en una parte.',
-      i:'Extender algo que ya funciona adentro del mismo colegio cuesta bastante menos que instalarlo de cero, y suele ser el movimiento de mejor rendimiento del año.' });
+      i:'Extender algo que ya funciona adentro del mismo colegio cuesta bastante menos que instalarlo de cero, y suele ser la acción de mayor impacto del año.' });
 
   const ns = noSabe();
   if (ns >= 3)
@@ -984,7 +984,7 @@ function vInforme(){
           <div class="dd">${esc(m.it.mov[1])}</div>
           <div class="orig">Viene de la pregunta ${esc(m.it.id)}, ${esc(m.it.t.toLowerCase())}</div>
           <span class="mes">${esc(m.it.mov[2])}</span></div></div>`).join('')}</div>
-        <p class="nota-pie">La ventana sugerida indica cuándo cuesta menos instalar cada acción, considerando la jornada de planificación docente de comienzos de marzo y el cierre de la Fase Estratégica del PME el 20 de marzo. Las fechas las define el establecimiento.</p>
+        <p class="nota-pie">El período sugerido indica cuándo cuesta menos instalar cada acción, considerando la jornada de planificación docente de comienzos de marzo y el cierre de la Fase Estratégica del PME el 20 de marzo. Las fechas las define el establecimiento.</p>
       </div>` : ''}
 
       ${inst.length ? `<div class="bloq"><h3>Lo que ya tienes instalado</h3>
@@ -993,7 +993,7 @@ function vInforme(){
       </div>` : ''}
 
       <div class="bloq"><h3>Qué de esto te sirve para el Plan de Gestión 2027</h3>
-        <p class="lead">Todo lo anterior describe prácticas del colegio. Acá es donde eso se conecta con lo que la ley va a pedir. La Ley 21.809 fija siete contenidos mínimos para el Plan de Gestión de Convivencia Educativa, y los establecimientos que reciben subvención tienen plazo hasta el 1 de abril de 2027 para adecuarse. La tabla cruza esos siete contenidos con las preguntas que acabas de responder, identificadas por el número que aparece al lado.</p>
+        <p class="lead">Todo lo anterior describe prácticas del colegio. Aquí es donde eso se conecta con lo que exige la ley. La Ley 21.809 fija siete contenidos mínimos para el Plan de Gestión de Convivencia Educativa, y los establecimientos que reciben subvención tienen plazo hasta el 1 de abril de 2027 para adecuarse. La tabla cruza esos siete contenidos con las preguntas que acabas de responder, identificadas por el número que aparece al lado.</p>
         <div class="plan">
           <div class="r enc"><span>Contenido mínimo del plan</span><b>Preguntas</b></div>
           ${MAPA_16D.map(([l,t,ids,ok]) => `<div class="r"><span><i>${esc(l)})</i> ${esc(t)}</span>${ok?`<b>${esc(ids)}</b>`:`<b class="falta">sin cubrir</b>`}</div>`).join('')}
@@ -1085,7 +1085,7 @@ function vInforme(){
 function ejemplo(){
   st.col = {rbd:'7743', nombre:'Colegio Bicentenario Felmer Niklitschek', comuna:'Puerto Varas',
             region:'Los Lagos', dep:'Particular subvencionado', mat:612};
-  st.cargo = 'Coordinación o encargatura de convivencia';
+  st.cargo = 'Encargado o encargada de convivencia escolar';
   st.ciclo = 'Solo educación básica';
   st.r = {'1.1':1,'1.2':1,'1.3':0,'2.1':2,'2.2':0,'2.3':1,'2.4':0,
           '3.1':1,'3.2':1,'3.3':0,'4.1':2,'4.2':1,'4.3':'nose','5.1':2,'5.2':0,'5.3':1};
