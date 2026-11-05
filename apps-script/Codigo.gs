@@ -87,7 +87,7 @@ function guardarFila(d) {
   if (!CONFIG.PLANILLA) return;
   const c = d.colegio || {};
   const et = function(id) {
-    const v = (d.respuestas || {})[id];
+    let v = (d.respuestas || {})[id];
     if (v === undefined) v = (d.opcionales || {})[id];
     if (typeof v === 'number') return NIVEL[v];
     if (v === 'nose') return 'No lo sé';
