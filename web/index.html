@@ -181,6 +181,9 @@ details.anexo summary{cursor:pointer;font-size:.86rem;font-weight:700;color:var(
 .plan .r.enc b{color:var(--tinta-tenue)}
 .plan .r i{font-style:normal;color:var(--tinta-tenue);font-weight:700}
 .plan .r b.falta{color:var(--coral)}
+.plan .r b.parcial{color:#8A6A12;text-align:right}
+.plan .r b.parcial span{display:block;font-size:.7rem;font-weight:700}
+.plan .r .nt{display:block;font-size:.78rem;color:var(--tinta-media);line-height:1.45;margin-top:3px}
 .falta-box{margin-top:16px;padding:15px 16px;border-radius:var(--radio);background:var(--coral-tenue);border:1px solid var(--coral)}
 .falta-box .ft{font-weight:800;font-size:.95rem;line-height:1.3}
 .falta-box p{font-size:.88rem;line-height:1.5;margin-top:8px}
@@ -413,13 +416,18 @@ const ORDEN_16D = ['4.3','2.1','3.3','2.4','5.3','1.1','5.2','5.1','1.2','1.3','
    es una decisión que el establecimiento toma al escribirlo, así que ninguna
    pregunta la cubre y el informe lo dice. */
 const MAPA_16D = [
-  ['a','Coordinación con el área técnico-pedagógica y con el área administrativa','4.3',1],
-  ['b','Información, difusión y formación para todos los estamentos','2.1 y 3.3',1],
-  ['c','Promoción del bienestar y la salud mental','2.4',1],
-  ['d','Gestión colaborativa de conflictos de convivencia o situaciones de riesgo','5.3',1],
-  ['e','Calendarización de las actividades del año escolar','',0],
-  ['f','Estudiantes como sujetos activos','5.2',1],
-  ['g','Formación para padres, madres y apoderados','5.1',1]
+  /* [letra, contenido, preguntas, cobertura (2 total, 1 en parte, 0 sin cubrir), qué falta] */
+  ['a','Coordinación con el área técnico-pedagógica y con el área administrativa','4.3',1,
+   'La pregunta 4.3 cubre la coordinación con el área técnico-pedagógica. La coordinación con el área administrativa no está en este autodiagnóstico.'],
+  ['b','Información, difusión y formación para todos los estamentos','2.1 y 3.3',1,
+   'Las preguntas cubren la formación de docentes y de asistentes de la educación. La ley pide además información y difusión para toda la comunidad, en especial sobre buen trato y no discriminación arbitraria.'],
+  ['c','Promoción del bienestar y la salud mental','2.4',1,
+   'La pregunta 2.4 cubre el bienestar del equipo adulto. La ley pide acciones para todos los estamentos, con énfasis en la prevención de conductas suicidas y del consumo de drogas, alcohol y tabaco.'],
+  ['d','Gestión colaborativa de conflictos de convivencia o situaciones de riesgo','5.3',1,
+   'La pregunta 5.3 cubre los conflictos entre estudiantes. Las situaciones de riesgo no están en este autodiagnóstico.'],
+  ['e','Calendarización de las actividades del año escolar','',0,''],
+  ['f','Estudiantes como sujetos activos','5.2',2,''],
+  ['g','Formación para padres, madres y apoderados','5.1',2,'']
 ];
 
 const CARGOS = ['Director o directora','Sostenedor o representante legal','Jefe o jefa de UTP',
@@ -840,7 +848,9 @@ function payload(){
     lecturas: lecturas().map(x => x.t),
     lecturasDetalle: lecturas().map(x => ({titulo:x.t, apoyo:x.r, lectura:x.l, implicancia:x.i})),
     instalado: instalado().map(i => ({id:i.id, titulo:i.t})),
-    plan: MAPA_16D.map(([l,t,ids,ok]) => ({letra:l, contenido:t, preguntas: ok ? ids : null})),
+    plan: MAPA_16D.map(([l,t,ids,cob,nota]) => ({letra:l, contenido:t,
+      preguntas: cob === 2 ? ids : cob === 1 ? ids + ' (en parte)' : null,
+      cobertura: cob === 2 ? 'total' : cob === 1 ? 'parcial' : 'sin', nota: nota || null})),
     detalle: ITEMS.concat(Object.keys(st.o).length ? OPC : []).map(i => {
       const v = (st.r[i.id] !== undefined) ? st.r[i.id] : st.o[i.id];
       return {id:i.id, pregunta:i.t, respuesta: esNum(v) ? NIV[v] : v === 'nose' ? 'No lo sé' : v === 'na' ? 'No aplica' : '—',
@@ -994,10 +1004,11 @@ function vInforme(){
       </div>` : ''}
 
       <div class="bloq"><h3>Qué de esto te sirve para el Plan de Gestión 2027</h3>
-        <p class="lead">Todo lo anterior describe prácticas del colegio. Aquí es donde eso se conecta con lo que exige la ley. La Ley 21.809 fija siete contenidos mínimos para el Plan de Gestión de Convivencia Educativa, y los establecimientos que reciben subvención tienen plazo hasta el 1 de abril de 2027 para adecuarse. La tabla cruza esos siete contenidos con las preguntas que acabas de responder, identificadas por el número que aparece al lado.</p>
+        <p class="lead">Todo lo anterior describe prácticas del colegio. Aquí es donde eso se conecta con lo que exige la ley. La Ley 21.809 fija siete contenidos mínimos para el Plan de Gestión de Convivencia Educativa, y los establecimientos que reciben subvención tienen plazo hasta el 1 de abril de 2027 para adecuarse. La tabla cruza esos siete contenidos con las preguntas que acabas de responder, identificadas por el número que aparece al lado. Cuando las preguntas abarcan solo una parte de lo que pide la ley, aparece marcado «en parte», con una nota sobre lo que falta.</p>
         <div class="plan">
           <div class="r enc"><span>Contenido mínimo del plan</span><b>Preguntas</b></div>
-          ${MAPA_16D.map(([l,t,ids,ok]) => `<div class="r"><span><i>${esc(l)})</i> ${esc(t)}</span>${ok?`<b>${esc(ids)}</b>`:`<b class="falta">sin cubrir</b>`}</div>`).join('')}
+          ${MAPA_16D.map(([l,t,ids,cob,nota]) => `<div class="r"><span><i>${esc(l)})</i> ${esc(t)}${nota?`<span class="nt">${esc(nota)}</span>`:''}</span>${
+            cob === 2 ? `<b>${esc(ids)}</b>` : cob === 1 ? `<b class="parcial">${esc(ids)}<span>en parte</span></b>` : `<b class="falta">sin cubrir</b>`}</div>`).join('')}
         </div>
         <div class="falta-box">
           <div class="ft">El contenido que este autodiagnóstico no cubre</div>

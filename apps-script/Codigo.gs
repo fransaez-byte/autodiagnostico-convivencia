@@ -247,12 +247,16 @@ function cuerpoCorreo(d, conRadar) {
     h += titulo('Dónde entra cada parte en tu Plan de Gestión');
     let p = '';
     d.plan.forEach(function(x) {
-      p += '<tr><td style="padding:8px 0;border-bottom:1px solid ' + LINEA + ';font-size:13px;color:' + TINTA + '">' + esc(x.letra) + ') ' + esc(x.contenido) + '</td>' +
-        '<td style="padding:8px 0 8px 12px;border-bottom:1px solid ' + LINEA + ';font-size:13px;font-weight:bold;text-align:right;white-space:nowrap;color:' + (x.preguntas ? VERDE_HONDO : '#E25D5D') + '">' +
-        esc(x.preguntas || 'sin cubrir') + '</td></tr>';
+      const parcial = x.cobertura === 'parcial';
+      const color = !x.preguntas ? '#E25D5D' : parcial ? '#8A6A12' : VERDE_HONDO;
+      const nums = parcial ? esc(String(x.preguntas).replace(' (en parte)', '')) + '<br><span style="font-size:11px">en parte</span>' : esc(x.preguntas || 'sin cubrir');
+      p += '<tr><td valign="top" style="padding:8px 0;border-bottom:1px solid ' + LINEA + ';font-size:13px;color:' + TINTA + '">' + esc(x.letra) + ') ' + esc(x.contenido) +
+          (x.nota ? '<div style="font-size:12px;color:' + TINTA_MEDIA + ';line-height:1.45;margin-top:3px">' + esc(x.nota) + '</div>' : '') + '</td>' +
+        '<td valign="top" style="padding:8px 0 8px 12px;border-bottom:1px solid ' + LINEA + ';font-size:13px;font-weight:bold;text-align:right;white-space:nowrap;color:' + color + '">' +
+        nums + '</td></tr>';
     });
     h += '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + p + '</table>';
-    h += parrafo('Contenidos mínimos del artículo 16 D de la Ley 21.809, con el número de la pregunta que los toca. Este informe describe prácticas declaradas por quien respondió. No evalúa ni certifica el cumplimiento de normativa educacional.', ';font-size:12px;color:#9B9B9B;margin-top:10px');
+    h += parrafo('Contenidos mínimos del artículo 16 D de la Ley 21.809, con el número de la pregunta que los toca. «En parte» indica que las preguntas abarcan solo una parte de lo que pide la ley. Este informe describe prácticas declaradas por quien respondió. No evalúa ni certifica el cumplimiento de normativa educacional.', ';font-size:12px;color:#9B9B9B;margin-top:10px');
   }
 
   /* ---- todas las respuestas ---- */
