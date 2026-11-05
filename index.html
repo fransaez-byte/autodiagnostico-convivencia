@@ -228,7 +228,7 @@ footer.pie{margin-top:40px;padding-top:18px;border-top:1px solid var(--linea);fo
   <footer class="pie noimp">
     <span>Fundación Eventuras</span>
     <a href="https://www.eventuras.org">eventuras.org</a>
-    <a href="https://www.eventuras.org/politica-de-privacidad">Política de privacidad</a>
+    <a href="https://sites.google.com/eventuras.org/fundacioneventuras/sobre-eventuras/pol%C3%ADtica-de-privacidad">Política de privacidad</a>
   </footer>
 </div>
 
@@ -243,7 +243,7 @@ footer.pie{margin-top:40px;padding-top:18px;border-top:1px solid var(--linea);fo
    Mientras esté vacío, el informe se muestra igual y no se envía nada. */
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyqzO0_fP_O7uSA4ApyuF28ahgH0PdJfWDPGnNWFQDV7S2BVSPnr-CzSdxjqmOyBLhP/exec';
 const CONTACTO = { correo:'contacto@eventuras.org', sitio:'https://www.eventuras.org',
-                   privacidad:'https://www.eventuras.org/politica-de-privacidad' };
+                   privacidad:'https://sites.google.com/eventuras.org/fundacioneventuras/sobre-eventuras/pol%C3%ADtica-de-privacidad' };
 
 /* Los patrones se activan cuando haya respuestas suficientes para definir
    qué es alto y qué es bajo contra la distribución observada. Antes de eso,
@@ -423,7 +423,8 @@ const MAPA_16D = [
 
 const CARGOS = ['Director o directora','Sostenedor o representante legal','Jefatura técnico-pedagógica (UTP)',
   'Coordinación o encargatura de convivencia','Inspectoría general','Jefatura de ciclo','Docente','Otro'];
-const CICLOS = ['Educación parvularia','Educación básica','Educación media'];
+const CICLOS = ['El establecimiento completo','Solo educación parvularia','Solo educación básica','Solo educación media'];
+const TODO_EL_COLEGIO = CICLOS[0];
 
 const ITEMS = DIMS.flatMap(d => d.items.map(i => ({...i, dim:d.id})));
 const CAPA1 = ITEMS.filter(i => i.c1);
@@ -519,6 +520,27 @@ function radar(){
   });
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:360px;display:block;margin:0 auto" role="img"
     aria-label="Perfil de las cinco dimensiones del establecimiento">${g}</svg>`;
+}
+
+/* El mismo radar como imagen PNG, para ponerlo dentro del correo. Los correos no
+   muestran gráficos SVG, así que se dibuja en un canvas con los colores ya resueltos.
+   Devuelve el PNG en base64 (sin el prefijo data:) o null si algo falla. */
+async function radarPNG(){
+  try {
+    const cs = getComputedStyle(document.documentElement);
+    let svg = radar().replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" font-family="Nunito, Segoe UI, Helvetica, Arial, sans-serif" ')
+      .replace(/ width="100%" style="[^"]*"/, ' width="340" height="268"')
+      .replace(/var\((--[a-z-]+)\)/g, (_, v) => cs.getPropertyValue(v).trim() || '#383838');
+    const img = new Image();
+    await new Promise((ok, mal) => { img.onload = ok; img.onerror = mal;
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+    const k = 2, cv = document.createElement('canvas');
+    cv.width = 340 * k; cv.height = 268 * k;
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    return cv.toDataURL('image/png').split(',')[1];
+  } catch (e) { return null; }
 }
 
 /* ======================= vistas ======================= */
@@ -647,8 +669,8 @@ function vQuien(){
     <p class="q">¿Desde qué rol respondes?</p>
     <p class="hint">Queda escrito en el informe, porque lo que se ve desde cada cargo es distinto.</p>
     <div class="opts" id="cg">${CARGOS.map(c => `<button class="opt${st.cargo===c?' sel':''}" data-v="${esc(c)}"><span class="t">${esc(c)}</span></button>`).join('')}</div>
-    <p class="q" style="margin-top:26px">¿Desde qué ciclo respondes?</p>
-    <p class="hint">Las prácticas suelen estar en momentos distintos en cada ciclo, así que el informe se arma sobre uno. Al terminar puedes responder por otro y comparar.</p>
+    <p class="q" style="margin-top:26px">¿Sobre qué parte del colegio vas a responder?</p>
+    <p class="hint">Elige el alcance que conozcas mejor. Queda anotado en el informe y se responde una sola vez.</p>
     <div class="opts" id="cc">${CICLOS.map(c => `<button class="opt${st.ciclo===c?' sel':''}" data-v="${esc(c)}"><span class="t">${esc(c)}</span></button>`).join('')}</div>
     <div class="acc"><button class="btn p" id="sig" ${st.cargo&&st.ciclo?'':'disabled'}>Empezar las preguntas</button>
       <button class="btn s" id="atras">Atrás</button></div>
@@ -675,7 +697,9 @@ function vPregunta(){
     ${it.alc ? `<p class="alcance">${esc(it.alc)}</p>` : '<div style="height:6px"></div>'}
     <button class="marcaciclo${st.dif[it.id]?' sel':''}" id="dif">
       <span class="bx">${st.dif[it.id]?'✓':''}</span>
-      <span>Esto funciona distinto en otros ciclos. Responde por ${esc((st.ciclo||'').toLowerCase())} y lo dejamos anotado.</span>
+      <span>${st.ciclo === TODO_EL_COLEGIO
+        ? 'Esto funciona distinto según el ciclo. Responde por lo que ocurre en la mayor parte del colegio y lo dejamos anotado.'
+        : `Esto funciona distinto en otros ciclos. Responde pensando en ${esc((st.ciclo||'').replace(/^Solo /,'').toLowerCase())} y lo dejamos anotado.`}</span>
     </button>
     <div class="opts" id="ops">${it.n.map((d,i) =>
       `<button class="opt plano${v===i?' sel':''}" data-i="${i}"><span class="d">${esc(d)}</span></button>`).join('')}</div>
@@ -807,13 +831,19 @@ function payload(){
     distintoCiclo: Object.keys(st.dif).filter(k => st.dif[k]),
     noSabe: ITEMS.filter(i => st.r[i.id] === 'nose').map(i => i.id),
     bandas: Object.fromEntries(DIMS.map(d => { const b = banda(d.id);
-      return [d.id, {nombre:d.nombre, estado:b.txt, valor:b.val == null ? null : Math.round(b.val*100)/100}]; })),
-    foco: foco ? {id:foco.it.id, titulo:foco.it.t, tramo:foco.tramo.n,
+      return [d.id, {nombre:d.nombre, estado:b.txt, clase:b.clase, valor:b.val == null ? null : Math.round(b.val*100)/100}]; })),
+    foco: foco ? {id:foco.it.id, titulo:foco.it.t, tramo:foco.tramo.n, porque:foco.tramo.por,
                   hoy:foco.it.n[st.r[foco.it.id]],
                   siguiente: st.r[foco.it.id] < 3 ? foco.it.n[st.r[foco.it.id]+1] : null} : null,
     acciones: R.slice(0,3).map(m => ({id:m.it.id, titulo:m.it.mov[0], detalle:m.it.mov[1], ventana:m.it.mov[2]})),
     lecturas: lecturas().map(x => x.t),
+    lecturasDetalle: lecturas().map(x => ({titulo:x.t, apoyo:x.r, lectura:x.l, implicancia:x.i})),
     instalado: instalado().map(i => ({id:i.id, titulo:i.t})),
+    plan: MAPA_16D.map(([l,t,ids,ok]) => ({letra:l, contenido:t, preguntas: ok ? ids : null})),
+    detalle: ITEMS.concat(Object.keys(st.o).length ? OPC : []).map(i => {
+      const v = (st.r[i.id] !== undefined) ? st.r[i.id] : st.o[i.id];
+      return {id:i.id, pregunta:i.t, respuesta: esNum(v) ? NIV[v] : v === 'nose' ? 'No lo sé' : v === 'na' ? 'No aplica' : '—',
+              distinto: !!st.dif[i.id]}; }),
     contacto: st.lead,
     consentimiento: {informe: TEXTO_CONSENTIMIENTO, marketing: st.lead && st.lead.mkt ? TEXTO_MARKETING : null}
   };
@@ -821,6 +851,7 @@ function payload(){
 
 async function enviar(){
   const cuerpo = payload();
+  cuerpo.radarPng = await radarPNG();
   const est = $('#estadoEnvio');
   if (!ENDPOINT) { if (est) est.innerHTML = `<div class="estado ok">Informe generado. El envío por correo se activa al conectar el backend.</div>`; return; }
   try {
@@ -982,7 +1013,7 @@ function vInforme(){
             <div class="dd">Con el botón del final de la página queda en PDF, con la fecha y un número que lo identifica. Más abajo, en “Ver todas tus respuestas”, está la lista completa de lo que marcaste. Esa lista describe dónde está hoy el colegio, que es el punto de partida del que el plan tiene que salir. Si el próximo año vuelves a responder, puedes comparar.</div></div></div>
           <div class="it"><div class="n">2</div><div>
             <div class="tt">Pide a dos personas más del equipo que respondan</div>
-            <div class="dd">Desde otro cargo y desde otro ciclo. Son seis minutos a cada una. Con tres respuestas del mismo colegio aparecen las diferencias entre lo que ve cada uno, que suele ser la parte más útil.</div>
+            <div class="dd">Desde otro cargo o sobre otra parte del colegio. Son seis minutos a cada una. Con tres respuestas del mismo colegio aparecen las diferencias entre lo que ve cada uno, que suele ser la parte más útil.</div>
             <div class="copiabox noimp"><button class="btn s" id="copiar" style="padding:9px 16px;font-size:.84rem">Copiar el enlace para tu equipo</button><span id="copiaOk" class="copiaok" hidden>Enlace copiado</span></div>
             <div class="dd ligada" id="copiaTxt" hidden></div></div></div>
           <div class="it"><div class="n">3</div><div>
@@ -994,9 +1025,9 @@ function vInforme(){
       <div class="bloq"><h3>Alcance de este informe</h3>
         <p class="lead">Lo que este informe puede afirmar con la información que tiene, y lo que no.</p>
         <div class="alcbox">
-          <div>Describe prácticas declaradas por una persona, desde un cargo y un ciclo. No evalúa ni certifica el cumplimiento de normativa educacional, que corresponde a la Superintendencia de Educación.</div>
+          <div>Describe prácticas declaradas por una persona, desde un cargo y sobre una parte del colegio. No evalúa ni certifica el cumplimiento de normativa educacional, que corresponde a la Superintendencia de Educación.</div>
           <div>Las lecturas se apoyan únicamente en las respuestas indicadas en cada una. Donde la información no alcanza, el informe lo dice en vez de completar.</div>
-          <div>Una segunda respuesta desde otro cargo o desde otro ciclo del mismo establecimiento permite ver si la mirada es compartida, que es el contraste más útil que se puede hacer con este instrumento.</div>
+          <div>Una segunda respuesta desde otro cargo o sobre otra parte del mismo establecimiento permite ver si la mirada es compartida, que es el contraste más útil que se puede hacer con este instrumento.</div>
         </div>
       </div>
 
@@ -1022,7 +1053,7 @@ function vInforme(){
       ${esEj ? `<div class="bloq" style="padding-bottom:4px"><p style="font-size:.84rem;color:var(--coral);font-weight:700">Informe de ejemplo, con respuestas inventadas para revisar el diseño.</p></div>` : ''}
 
       <div class="folio">
-        <span>Folio ${esc(FOLIO)} · ${esc(hoy)} · Respondido desde ${esc(st.cargo||'')}${st.ciclo?' · '+esc(st.ciclo):''}</span>
+        <span>Folio ${esc(FOLIO)} · ${esc(hoy)} · Respondido desde ${esc(st.cargo||'')}${st.ciclo?' · Alcance: '+esc(st.ciclo):''}</span>
         <span>Fundación Eventuras</span>
       </div>
     </div>
@@ -1030,7 +1061,7 @@ function vInforme(){
   <div id="estadoEnvio"></div>
   <div class="acc noimp">
     <button class="btn p" id="imp">Descargar o imprimir</button>
-    <button class="btn s" id="otra">Responder por otro ciclo</button>
+    <button class="btn s" id="otra">Responder otra vez</button>
   </div>`;
   const enlace = location.origin + location.pathname;
   const bc = $('#copiar');
@@ -1055,7 +1086,7 @@ function ejemplo(){
   st.col = {rbd:'7743', nombre:'Colegio Bicentenario Felmer Niklitschek', comuna:'Puerto Varas',
             region:'Los Lagos', dep:'Particular subvencionado', mat:612};
   st.cargo = 'Coordinación o encargatura de convivencia';
-  st.ciclo = 'Educación básica';
+  st.ciclo = 'Solo educación básica';
   st.r = {'1.1':1,'1.2':1,'1.3':0,'2.1':2,'2.2':0,'2.3':1,'2.4':0,
           '3.1':1,'3.2':1,'3.3':0,'4.1':2,'4.2':1,'4.3':'nose','5.1':2,'5.2':0,'5.3':1};
   st.dif = {'1.1':true,'2.3':true,'5.1':true};
