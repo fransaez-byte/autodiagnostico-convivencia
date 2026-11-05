@@ -196,15 +196,23 @@ nivel no necesita ver el cuarto, necesita ver el segundo.
 
 ---
 
-## Pendiente de verificación antes de publicar
+## Artículo 16 D: verificado
 
-El informe nombra los siete contenidos mínimos del artículo 16 D. Las letras b), c), f) y g)
-están confirmadas contra el texto de la ley. Las letras **a), d) y e)** vienen de una lectura
-de segunda fuente y hay que contrastar su redacción literal, porque es exactamente el tipo
-de afirmación que un director puede verificar en dos minutos.
+Las siete letras del artículo 16 D están contrastadas con el texto oficial: Diario Oficial
+N° 44.415, del 1 de abril de 2026, artículo 1 N° 9 de la Ley 21.809. Se corrigieron tres
+rótulos en `MAPA_16D` para que calcen con la ley:
 
-Dónde se revisa: Ley Chile, Ley 21.809, artículo 16 D, letras a) a g). Si alguna redacción
-difiere, se corrige en `MAPA_16D`, que es el único lugar del código donde aparecen.
+- **a)** incluye también la coordinación con el área administrativa, no solo la
+  técnico-pedagógica.
+- **d)** son conflictos de convivencia o situaciones de riesgo en general, no solo entre
+  estudiantes.
+- **e)** es la calendarización de las actividades del año escolar, y cada actividad debe
+  indicar objetivo, contribución al propósito del plan, lugar, fecha y persona encargada.
 
-El plazo del 1 de abril de 2027 sí está confirmado, y sale de encadenar los artículos quinto
-y duodécimo transitorios.
+Las preguntas asociadas cubren solo una parte de algunas letras: 4.3 cubre la coordinación
+pedagógica de la letra a) y no la administrativa; 5.3 cubre los conflictos entre
+estudiantes de la letra d); 2.4 cubre el bienestar del equipo adulto de la letra c).
+
+El plazo del 1 de abril de 2027 está confirmado: la ley se publicó el 1 de abril de 2026,
+entra en vigencia a los tres meses (artículo primero transitorio) y los establecimientos
+subvencionados tienen nueve meses desde ahí (artículo quinto transitorio).

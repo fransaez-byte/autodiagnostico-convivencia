@@ -408,15 +408,16 @@ const TRAMOS = [
 /* Orden del artículo 16 D, para desempatar cuando dos ítems quedan igual de bajos. */
 const ORDEN_16D = ['4.3','2.1','3.3','2.4','5.3','1.1','5.2','5.1','1.2','1.3','2.2','2.3','3.1','3.2','4.1','4.2'];
 /* Los siete contenidos mínimos del artículo 16 D, con las preguntas de este
-   instrumento que los respaldan. La calendarización anual de las acciones del plan
+   instrumento que los respaldan. Texto verificado contra el Diario Oficial N° 44.415
+   (1 de abril de 2026), artículo 1 N° 9. La calendarización de las actividades
    es una decisión que el establecimiento toma al escribirlo, así que ninguna
    pregunta la cubre y el informe lo dice. */
 const MAPA_16D = [
-  ['a','Coordinación con el área técnico-pedagógica','4.3',1],
+  ['a','Coordinación con el área técnico-pedagógica y con el área administrativa','4.3',1],
   ['b','Información, difusión y formación para todos los estamentos','2.1 y 3.3',1],
   ['c','Promoción del bienestar y la salud mental','2.4',1],
-  ['d','Gestión colaborativa de conflictos entre estudiantes','5.3',1],
-  ['e','Calendarización anual de las acciones del plan','',0],
+  ['d','Gestión colaborativa de conflictos de convivencia o situaciones de riesgo','5.3',1],
+  ['e','Calendarización de las actividades del año escolar','',0],
   ['f','Estudiantes como sujetos activos','5.2',1],
   ['g','Formación para padres, madres y apoderados','5.1',1]
 ];
@@ -1000,8 +1001,8 @@ function vInforme(){
         </div>
         <div class="falta-box">
           <div class="ft">El contenido que este autodiagnóstico no cubre</div>
-          <p>La calendarización anual de las acciones del plan. Estas preguntas describen lo que el colegio ya hace hoy, y el calendario del próximo año es algo que define el equipo cuando se sienta a escribir el plan.</p>
-          <p>Si te sirve, las tres acciones que aparecen más arriba pueden entrar a ese calendario con una fecha, un lugar y un responsable para cada una.</p>
+          <p>La calendarización de las actividades del año escolar. Estas preguntas describen lo que el colegio ya hace hoy, y el calendario del próximo año es algo que define el equipo cuando se sienta a escribir el plan.</p>
+          <p>Si te sirve, las tres acciones que aparecen más arriba pueden entrar a ese calendario. La ley pide que cada actividad indique su objetivo, cómo contribuye al propósito del plan, el lugar, la fecha y la persona encargada de ejecutarla.</p>
         </div>
       </div>
 
@@ -1018,7 +1019,7 @@ function vInforme(){
             <div class="dd ligada" id="copiaTxt" hidden></div></div></div>
           <div class="it"><div class="n">3</div><div>
             <div class="tt">Lleva las tres acciones al calendario del plan</div>
-            <div class="dd">Si decides tomarlas, cada una necesita una fecha, un lugar y un responsable. Con eso queda cubierto el contenido que arriba aparece sin cubrir.</div></div></div>
+            <div class="dd">Si decides tomarlas, cada una necesita su objetivo, una fecha, un lugar y una persona encargada. Con eso avanzas en el contenido que arriba aparece sin cubrir.</div></div></div>
         </div>
       </div>
 
