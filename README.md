@@ -16,10 +16,10 @@ Sitio: https://diagnostico.eventuras.org · Informe de ejemplo: https://diagnost
 ## Publicación
 
 La página se sirve con GitHub Pages desde la rama `gh-pages`, que contiene solo la carpeta
-`web/`. Se actualiza con:
+`web/`. Se actualiza agregando un commit con el contenido actual de `web/` encima de esa rama:
 
-    git subtree split --prefix web -b gh-pages
-    git push origin gh-pages
+    git fetch origin
+    git push origin "$(git commit-tree main:web -p origin/gh-pages -m 'Actualiza la página')":refs/heads/gh-pages
 
 El código de `apps-script/` se pega en el proyecto de Apps Script y se publica como una
 versión nueva de la implementación. El identificador de la planilla no se guarda en este
